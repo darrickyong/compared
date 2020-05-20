@@ -3,15 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./assets/stylesheets/master.css" rel="stylesheet">
   <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <title>Compared</title>
 </head>
 <body>
-  <div id="root"></div>
+  <header>
+    Compared
+  </header>
+
+  <div class="main">
+    <div class="main-left">
+      <div class="main-left-container">
+        <div>
+          <button class="slide-button">Slide View</button>
+          <button class="zoom-button">Zoom View</button>
+        </div>
+        <div class="summary">
+          <form id="user-form">
+            <label> Net Worth:
+              <input 
+                type="number"
+                class="user-worth" 
+                placeholder="Enter your net worth">
+            </label>
+            <label> Estimated Annual Savings:
+              <input 
+                type="number" 
+                class="user-savings" 
+                placeholder="Enter your annual savings">
+            </label>
+            <button>Calculate</button>
+          </form>
+          
+        </div>
+
+        <div class="user-compare">
+          It will take me around
+          <span id="years"></span> 
+          years to reach the equivalent of 
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="main-right">
+      <div id="test"> test </div>
+    </div>
+  </div>
+
 
   
   <!-- d3 scripts -->
-  <script src="./src/index.js"></script>
+  <script src="./assets/javascripts/index.js"></script>
 </body>
 </html>

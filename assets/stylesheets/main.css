@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  width: 95%;
+  height: 95vh;
+  display: flex;
+  background: #F2F2F2;
+}
+
+.main-left {
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+
+.main-left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 85%;
+  padding: 20px;
+  border-right: 1px solid slategray;
+}
+
+.summary {
+
+}
+
+#root {
+
+}
+
+.main-right {
+  width: 100%;
+}
