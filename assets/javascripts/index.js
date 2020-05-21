@@ -61,20 +61,21 @@ options.text( d => {
     return d.name;
   })
 
-const svg = d3
-  .select(".svg")
-  .append("svg")
-  .attr("width", "100%")
-  .style("background", "#F2F2F2");
+
+// const svg = d3
+//   .select(".svg")
+//   .append("svg")
+//   .attr("width", "100%")
+//   .style("background", "#F2F2F2");
   
 const you = d3.select(".this-is-you")
   .append("svg")
-  .attr("width", 10)
-  .attr("height", 10)
+  .attr("width", 4)
+  .attr("height", 4)
   .append("rect")
-  .attr("width", 10)
-  .attr("height", 10)
-  .style("fill", "pink")
+  .attr("width", 4)
+  .attr("height", 4)
+  .style("fill", "red")
 
 const compareImg = d3.select(".this-is-else")
   .append("svg")
@@ -84,9 +85,7 @@ const compareImg = d3.select(".this-is-else")
   .attr("width", 200)
   .attr("height", 200)
   .attr("xlink:href",
-    netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex]
-      .img
-  );
+    netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img)
 
 const compareName = d3
   .select("#compare-name")
@@ -105,4 +104,100 @@ document
     compareVal.text(`${ conv_number(netWorth[e.target.selectedIndex].val) }`);
   });
 
+const svg = d3.select(".blocks")
+  .append("svg")
 
+// const svg = d3.select(".testing")
+
+const width = 2000;
+const height = 550;
+const offset = 20;
+const groupSpacing = 1;
+const cellSpacing = 1;
+const cellSize = 4;
+const updateDuration = 125;
+const updateDelay = updateDuration / 500;
+
+let block = svg
+  .append("g")
+  .attr("class", "cells")
+  .attr("transform", "translate(" + offset + "," + (offset + 30) + ")")
+  .selectAll("rect");
+
+const update = size => {
+  svg.selectAll("rect").remove();
+  // debugger
+  const n0 = block.size();
+  block = block.data(d3.range(size));
+  // debugger
+  // block
+  //   .exit()
+  //   .transition()
+  //   .delay((d, i) => {
+  //     return (n0 - i) * updateDelay;
+  //   })
+  //   .duration(updateDuration)
+  //   .attr("width", 0)
+  //   .remove();
+
+
+  block
+    .enter()
+    .append("rect")
+    .attr("width", 0)
+    .attr("height", cellSize)
+    .attr("x", i => {
+      const x0 = Math.floor(i / 1000);
+      // const x0 = Math.floor(i / 500);
+      const x1 = Math.floor((i % 100) / 10);
+      // const x1 = Math.floor((i % 50) / 10);
+      const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
+      // debugger
+      // const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 5);
+      // debugger
+      return xblock;
+    })
+    .attr("y", i => {
+      const y0 = Math.floor(i / 100) % 10;
+      // const y0 = Math.floor(i / 50) % 10;
+      const y1 = Math.floor(i % 10);
+      // const y1 = Math.floor(i % 5);
+      const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+      // debugger
+      // const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+      // debugger
+      return yblock;
+    })
+    .transition()
+    .delay(function (d, i) {
+      return (i - n0) * updateDelay;
+    })
+    .duration(updateDuration)
+    .attr("width", cellSize);
+
+  // label
+  //   .attr("x", offset + groupSpacing)
+  //   .attr("y", offset + groupSpacing)
+  //   .attr("dy", ".71em")
+  //   .transition()
+  //   .duration(Math.abs(size - n0) * updateDelay + updateDuration / 2)
+  //   .ease("linear")
+  //   .tween("text", function () {
+  //     const i = d3.interpolateNumber(n0, size);
+  //     return function (t) {
+  //       this.textContent = formatNumber(Math.round(i(t)));
+  //     };
+  //   });
+}
+
+document
+  .getElementsByClassName("slide-button")[0]
+  .addEventListener("click", (e) => {
+    update(1)
+  });
+
+document
+  .getElementsByClassName("zoom-button")[0]
+  .addEventListener("click", (e) => {
+    update(10)
+  });
