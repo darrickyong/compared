@@ -77,15 +77,16 @@ body {
 
 .blocks {
   display: flex;
+  flex-direction: column;
   width: 90%;
   height: 90%;
   border: 1px solid black;
   overflow: scroll;
-  /* overflow: scroll; */
 }
 
 .blocks > svg {
   min-width: 1000%;
+  height: 90%;
 }
 
 rect {

@@ -27,6 +27,4 @@ const conv_number = (expr, decplaces) => {
   return (str.substring(0, decpoint) + "." + str.substring(decpoint, str.length));
 }
 
-// console.log(nper(5, 1, 1000, 10000, -200000))
-
 module.exports.nper = nper;

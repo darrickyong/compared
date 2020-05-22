@@ -15,7 +15,7 @@ const nper = (rate, cmpd, pmt, pv, fv) => {
       Math.log((-fv * rate + pmt) / (pmt + rate * pv)) / Math.log(1 + rate);
   }
   yrs = conv_number(yrs);
-  return yrs;
+  return yrs < 0 ? 0 : yrs;
 };
 
 const conv_number = (expr) => {
@@ -37,11 +37,20 @@ const setYears = e => {
 
 document
   .getElementById("user-form")
-  .addEventListener("submit", e => setYears(e))
+  .addEventListener("submit", e => {
+    setYears(e);
+    let baseline = document.getElementsByClassName("user-worth")[0].value;
+    let compare =
+      netWorth[
+        document.getElementsByClassName("user-selection")[0].selectedIndex
+      ].val;
+    document.getElementById("user-worth").innerHTML = `This represents $${conv_number(parseFloat(baseline))}`;
+    update(compare / baseline);
+  })
 
 const netWorth = [
-  { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
   { "name": "Test", "val": 500000, "img":"./assets/images/test.png" },
+  { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
 
 const selection = d3
@@ -102,6 +111,9 @@ document
     compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
     compareName.text(`${ netWorth[e.target.selectedIndex].name }`);
     compareVal.text(`${ conv_number(netWorth[e.target.selectedIndex].val) }`);
+    // let baseline = document.getElementsByClassName("user-worth")[0].value;
+    // let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+    // // update(compare/baseline);
   });
 
 const svg = d3.select(".blocks")
@@ -126,20 +138,7 @@ let block = svg
 
 const update = size => {
   svg.selectAll("rect").remove();
-  // debugger
-  const n0 = block.size();
   block = block.data(d3.range(size));
-  // debugger
-  // block
-  //   .exit()
-  //   .transition()
-  //   .delay((d, i) => {
-  //     return (n0 - i) * updateDelay;
-  //   })
-  //   .duration(updateDuration)
-  //   .attr("width", 0)
-  //   .remove();
-
 
   block
     .enter()
@@ -170,24 +169,10 @@ const update = size => {
     })
     .transition()
     .delay(function (d, i) {
-      return (i - n0) * updateDelay;
+      return (i) * updateDelay;
     })
     .duration(updateDuration)
     .attr("width", cellSize);
-
-  // label
-  //   .attr("x", offset + groupSpacing)
-  //   .attr("y", offset + groupSpacing)
-  //   .attr("dy", ".71em")
-  //   .transition()
-  //   .duration(Math.abs(size - n0) * updateDelay + updateDuration / 2)
-  //   .ease("linear")
-  //   .tween("text", function () {
-  //     const i = d3.interpolateNumber(n0, size);
-  //     return function (t) {
-  //       this.textContent = formatNumber(Math.round(i(t)));
-  //     };
-  //   });
 }
 
 document
