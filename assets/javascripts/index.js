@@ -45,7 +45,7 @@ document
         document.getElementsByClassName("user-selection")[0].selectedIndex
       ].val;
     document.getElementById("user-worth").innerHTML = `This represents $${conv_number(parseFloat(baseline))}`;
-    if ((compare / baseline) > 300) {
+    if ((compare / baseline) > 40000) {
       if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Are you sure you want to continue?")) {
         update(compare / baseline);
       } else return;
