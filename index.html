@@ -27,29 +27,33 @@
                 type="number"
                 class="user-worth"
                 step="0.01" 
-                placeholder="Enter your net worth">
+                placeholder="Est. net worth">
             </label>
             <label> Estimated Annual Savings:
               <input 
                 type="number" 
                 class="user-savings" 
                 setp="0.01" 
-                placeholder="Enter your annual savings">
+                placeholder="Est. annual savings">
             </label>
-            <label> Annual Interest Rate 
-              <input 
-                type="number"
-                class="user-interest"
-                value="5.00"
-                step="0.01"
-                placeholder="Enter annual interest"> %
+            <label> Annual Interest Rate: 
+              <span>
+                <input 
+                  type="number"
+                  class="user-interest"
+                  value="5.00"
+                  step="0.01"
+                  placeholder="Enter annual interest">
+                %
+              </span>
             </label>
             
             <div class="user-compare">
-              It will take you around
-              <span id="years">0</span> 
-              years to reach the equivalent of 
+              <span>
+                Who/What would you like to benchmark against?
+              </span>
             </div>
+
             <button>Calculate</button>
           </form>
           
@@ -61,7 +65,7 @@
     <div class="main-right">
       <div class="main-right-header">
         <div class="this-is-you">
-          <span id="user-worth">This will represent the amount under "Net Worth"</span>
+          <div id="user-worth">This will represent the amount under "Net Worth"</div>
         </div>
         <div class="this-is-else">
           <div>
@@ -70,10 +74,14 @@
         </div>
       </div>
       <div class="main-right-body">
-        <div><span id="compare-name"></span> is valued at around $<span id="compare-val"></span>:</div>
-        <!-- <svg id="testing"></svg> -->
+        <div><span class="compare-name"></span> is valued at around $<span id="compare-val"></span>:</div>
         <div class="blocks">
-          Below is a representation of Test
+          <div>
+            Press 'Calculate' to see a visual representation of <span class="compare-name"></span>. 
+          </div>
+          <div>
+            Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
+          </div>
         </div>
       </div>
     </div>

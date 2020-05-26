@@ -45,11 +45,19 @@ document
         document.getElementsByClassName("user-selection")[0].selectedIndex
       ].val;
     document.getElementById("user-worth").innerHTML = `This represents $${conv_number(parseFloat(baseline))}`;
-    update(compare / baseline);
+    if ((compare / baseline) > 300) {
+      if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Are you sure you want to continue?")) {
+        update(compare / baseline);
+      } else return;
+    } else {
+      update(compare / baseline);
+    }
   })
 
 const netWorth = [
-  { "name": "Test", "val": 500000, "img":"./assets/images/test.png" },
+  { "name": "Test", "val": 500000, "img":"./assets/images/test.jpeg" },
+  { "name": "Median Bay Area house", "val": 928000, "img":"./assets/images/home.jpg" },
+  { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
   { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
 
@@ -88,16 +96,17 @@ const you = d3.select(".this-is-you")
 
 const compareImg = d3.select(".this-is-else")
   .append("svg")
-  .attr("width", 200)
-  .attr("height", 200)
+  .attr("width", "225px")
+  .attr("height", "150px")
+  .attr("class", "compare-img")
   .append("image")
-  .attr("width", 200)
-  .attr("height", 200)
+  .attr("width", "225px")
+  .attr("height", "150px")
   .attr("xlink:href",
     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img)
 
 const compareName = d3
-  .select("#compare-name")
+  .selectAll(".compare-name")
   .text(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].name);
 
 const compareVal = d3
@@ -133,7 +142,8 @@ const updateDelay = updateDuration / 500;
 let block = svg
   .append("g")
   .attr("class", "cells")
-  .attr("transform", "translate(" + offset + "," + (offset + 30) + ")")
+  .attr("transform", "translate(" + offset + "," + (offset) + ")")
+  // .attr("transform", "translate(0,0)")
   .selectAll("rect");
 
 const update = size => {
@@ -175,14 +185,14 @@ const update = size => {
     .attr("width", cellSize);
 }
 
-document
-  .getElementsByClassName("slide-button")[0]
-  .addEventListener("click", (e) => {
-    update(1)
-  });
+// document
+//   .getElementsByClassName("slide-button")[0]
+//   .addEventListener("click", (e) => {
+//     update(1)
+//   });
 
-document
-  .getElementsByClassName("zoom-button")[0]
-  .addEventListener("click", (e) => {
-    update(10)
-  });
+// document
+//   .getElementsByClassName("zoom-button")[0]
+//   .addEventListener("click", (e) => {
+//     update(10)
+//   });
