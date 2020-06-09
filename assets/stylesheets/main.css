@@ -19,21 +19,21 @@ body {
 .main-left {
   display: flex;
   align-items: center;
-  width: 200px;
-  min-width: 200px;
+  width: 275px;
 }
 
 .main-left-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 85%;
-  padding: 20px 20px 20px 10px;
+  justify-content: space-between;
+  height: 90%;
+  padding: 0px 20px;
   border-right: 1px solid slategray;
 }
 
 .summary {
   font-size: 14px;
+  height: 100%;
 }
 
 #user-form {
@@ -50,7 +50,7 @@ body {
 }
 
 .user-compare > select {
-  margin-top: 10px;
+  
 }
 
 .main-right {
@@ -67,20 +67,17 @@ body {
   width: 100%;
   margin-top: 15px;
 }
+
 .this-is-you {
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+  /* flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center; */
 }
 
-#user-worth {
-  margin-top: 20px;
-}
-
-.this-is-you > svg {
-  margin-top: 20px;
+.this-is-you svg {
+  margin-left: 5px;
 }
 
 .this-is-else {
@@ -91,7 +88,7 @@ body {
   border: none;
 }
 
-.main-right-body {
+.main-right-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -102,16 +99,17 @@ body {
 
 .blocks {
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  height: 90%;
+  align-items: center;;
+  width: 100%;
+  height: 940px;
   /* border: 1px solid black; */
   overflow: scroll;
 }
 
 .blocks > svg {
   min-width: 5000%;
-  min-height: 165%
+  height: 100%;
+  /* min-height: 165% */
 }
 
 rect {

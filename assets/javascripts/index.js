@@ -44,7 +44,6 @@ document
       netWorth[
         document.getElementsByClassName("user-selection")[0].selectedIndex
       ].val;
-    document.getElementById("user-worth").innerHTML = `This represents $${conv_number(parseFloat(baseline))}`;
     if ((compare / baseline) > 40000) {
       if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Are you sure you want to continue?")) {
         update(compare / baseline);
@@ -58,7 +57,7 @@ const height = 550;
 const offset = 20;
 const groupSpacing = 0;
 const cellSpacing = 1;
-const cellSize = 6;
+const cellSize = 8;
 const updateDuration = 125;
 const updateDelay = updateDuration / 500;
 
@@ -70,9 +69,7 @@ const netWorth = [
 ]
 
 const selection = d3
-  .select(".user-compare")
-  .append("select")
-  .attr("class", "user-selection")
+  .select(".user-selection")
 
 const options = selection.selectAll("option")
   .data(netWorth)
@@ -85,13 +82,6 @@ options.text( d => {
   .attr("value", d => {
     return d.name;
   })
-
-
-// const svg = d3
-//   .select(".svg")
-//   .append("svg")
-//   .attr("width", "100%")
-//   .style("background", "#F2F2F2");
   
 const you = d3.select(".this-is-you")
   .append("svg")
@@ -100,7 +90,7 @@ const you = d3.select(".this-is-you")
   .append("rect")
   .attr("width", cellSize)
   .attr("height", cellSize)
-  .style("fill", "red")
+  .style("fill", "green")
 
 const compareImg = d3.select(".this-is-else")
   .append("svg")
@@ -113,9 +103,9 @@ const compareImg = d3.select(".this-is-else")
   .attr("xlink:href",
     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img)
 
-const compareName = d3
-  .selectAll(".compare-name")
-  .text(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].name);
+// const compareName = d3
+//   .selectAll(".compare-name")
+//   .text(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].name);
 
 const compareVal = d3
   .select("#compare-val")
@@ -126,8 +116,8 @@ document
   .addEventListener("change", (e) => {
     setYears(e);
     compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
-    compareName.text(`${ netWorth[e.target.selectedIndex].name }`);
     compareVal.text(`${ conv_number(netWorth[e.target.selectedIndex].val) }`);
+    // compareName.text(`${ netWorth[e.target.selectedIndex].name }`);
     // let baseline = document.getElementsByClassName("user-worth")[0].value;
     // let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
     // // update(compare/baseline);
@@ -135,8 +125,6 @@ document
 
 const svg = d3.select(".blocks")
   .append("svg")
-
-// const svg = d3.select(".testing")
 
 let block = svg
   .append("g")
@@ -160,9 +148,7 @@ const update = size => {
       const x1 = Math.floor((i % 100) / 10);
       // const x1 = Math.floor((i % 50) / 10);
       const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
-      // debugger
       // const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 5);
-      // debugger
       return xblock;
     })
     .attr("y", i => {
@@ -171,9 +157,7 @@ const update = size => {
       const y1 = Math.floor(i % 10);
       // const y1 = Math.floor(i % 5);
       const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-      // debugger
       // const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-      // debugger
       return yblock;
     })
     .transition()
@@ -183,15 +167,3 @@ const update = size => {
     .duration(updateDuration)
     .attr("width", cellSize);
 }
-
-// document
-//   .getElementsByClassName("slide-button")[0]
-//   .addEventListener("click", (e) => {
-//     update(1)
-//   });
-
-// document
-//   .getElementsByClassName("zoom-button")[0]
-//   .addEventListener("click", (e) => {
-//     update(10)
-//   });

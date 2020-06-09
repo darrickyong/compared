@@ -16,10 +16,6 @@
   <div class="main">
     <div class="main-left">
       <div class="main-left-container">
-        <div>
-          <button class="visualize-button">Visualize</button>
-          <button class="tvm-button">Time Value of Growth</button>
-        </div>
         <div class="summary">
           <form id="user-form">
             <label> Net Worth:
@@ -29,6 +25,9 @@
                 step="0.01" 
                 placeholder="Est. net worth">
             </label>
+
+            <div class="this-is-you">This unit equals the value above:</div>
+
             <label> Estimated Annual Savings:
               <input 
                 type="number" 
@@ -42,48 +41,34 @@
                   type="number"
                   class="user-interest"
                   value="5.00"
-                  step="0.01"
-                  placeholder="Enter annual interest">
+                  step="0.01">
                 %
               </span>
             </label>
             
             <div class="user-compare">
               <span>
-                Who/What would you like to benchmark against?
+                Select benchmark below:
               </span>
+              <select class="user-selection"></select>
+              <div> is valued at $<span id="compare-val"></span>:</div>
             </div>
-            <div><span class="compare-name"></span> is valued at around $<span id="compare-val"></span>:</div>
             
             <div class="this-is-else"></div>
-            <button>Calculate</button>
+            <button>Visualize</button>
           </form>
-          
+          <div class="tvm">
+            Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
+            <button class="tvm-button">View Time Value of Growth</button>
+          </div>
         </div>
         
-        <div>
-          Press 'Calculate' to see a visual representation of <span class="compare-name"></span>. 
-        </div>
-        
-        <div>
-          Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
-        </div>
         
       </div>
     </div>
 
     <div class="main-right">
-      <div class="main-right-header">
-        <div class="this-is-you">
-          <div id="user-worth">This will represent the amount under "Net Worth"</div>
-        </div>
-        <!-- <div class="this-is-else">
-          <div>
-            We will compare to:
-          </div>
-        </div> -->
-      </div>
-      <div class="main-right-body">
+      <div class="main-right-container">
         <div class="blocks">
         </div>
       </div>
