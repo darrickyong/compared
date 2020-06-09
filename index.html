@@ -17,33 +17,41 @@
     <div class="main-left">
       <div class="main-left-container">
         <div class="summary">
-          <form id="user-form">
-            <label> Net Worth:
+          <form class="user-form">
+            <label>Current Savings (<div class="this-is-you">denoted by a</div>):
               <input 
                 type="number"
-                class="user-worth"
+                class="user-savings"
                 step="0.01" 
-                placeholder="Est. net worth">
+                placeholder="Estimated savings">
+                <div class="form-info">
+                  Note: Enter how much you have saved.
+                </div>
             </label>
 
-            <div class="this-is-you">This unit equals the value above:</div>
-
-            <label> Estimated Annual Savings:
+            <label>Annual Savings:
               <input 
                 type="number" 
-                class="user-savings" 
+                class="user-contributions" 
                 setp="0.01" 
                 placeholder="Est. annual savings">
+                <div class="form-info">
+                  Note: Enter how much you plan to save annually.
+                </div>
             </label>
-            <label> Annual Interest Rate: 
+
+            <label>Annual Interest Rate: 
               <span>
                 <input 
                   type="number"
-                  class="user-interest"
+                  class="user-growth"
                   value="5.00"
                   step="0.01">
                 %
               </span>
+              <div class="form-info">
+                Note: Enter an expected growth rate.
+              </div>
             </label>
             
             <div class="user-compare">
@@ -51,7 +59,7 @@
                 Select benchmark below:
               </span>
               <select class="user-selection"></select>
-              <div> is valued at $<span id="compare-val"></span>:</div>
+              <div> is valued at $<span id="compare-val"></span>.</div>
             </div>
             
             <div class="this-is-else"></div>
@@ -70,6 +78,7 @@
     <div class="main-right">
       <div class="main-right-container">
         <div class="blocks">
+          <div>Start: </div>
         </div>
       </div>
     </div>
