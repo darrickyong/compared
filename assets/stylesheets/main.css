@@ -3,10 +3,12 @@ body {
   flex-direction: column;;
   align-items: center;
   justify-content: center;
+  /* padding: 30px; */
 }
 
 .main {
   width: 95%;
+  /* height: 1500px; */
   height: 95vh;
   display: flex;
   background: #F2F2F2;
@@ -31,15 +33,12 @@ body {
 }
 
 .summary {
-  height: 75%;
   font-size: 14px;
 }
 
 #user-form {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 }
 
 #user-form input {
@@ -85,14 +84,9 @@ body {
 }
 
 .this-is-else {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
 }
 
 .compare-img {
-  margin-left: 20px;
   border-radius: 10px;
   border: none;
 }
@@ -111,13 +105,13 @@ body {
   flex-direction: column;
   width: 90%;
   height: 90%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   overflow: scroll;
 }
 
 .blocks > svg {
-  min-width: 1000%;
-  height: 90%;
+  min-width: 5000%;
+  min-height: 165%
 }
 
 rect {

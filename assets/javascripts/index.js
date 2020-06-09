@@ -53,6 +53,14 @@ document
       update(compare / baseline);
     }
   })
+const width = 2000;
+const height = 550;
+const offset = 20;
+const groupSpacing = 0;
+const cellSpacing = 1;
+const cellSize = 6;
+const updateDuration = 125;
+const updateDelay = updateDuration / 500;
 
 const netWorth = [
   { "name": "Test", "val": 500000, "img":"./assets/images/test.jpeg" },
@@ -87,11 +95,11 @@ options.text( d => {
   
 const you = d3.select(".this-is-you")
   .append("svg")
-  .attr("width", 4)
-  .attr("height", 4)
+  .attr("width", cellSize)
+  .attr("height", cellSize)
   .append("rect")
-  .attr("width", 4)
-  .attr("height", 4)
+  .attr("width", cellSize)
+  .attr("height", cellSize)
   .style("fill", "red")
 
 const compareImg = d3.select(".this-is-else")
@@ -129,15 +137,6 @@ const svg = d3.select(".blocks")
   .append("svg")
 
 // const svg = d3.select(".testing")
-
-const width = 2000;
-const height = 550;
-const offset = 20;
-const groupSpacing = 1;
-const cellSpacing = 1;
-const cellSize = 4;
-const updateDuration = 125;
-const updateDelay = updateDuration / 500;
 
 let block = svg
   .append("g")

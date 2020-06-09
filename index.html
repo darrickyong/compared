@@ -17,8 +17,8 @@
     <div class="main-left">
       <div class="main-left-container">
         <div>
-          <button class="slide-button">Slide View</button>
-          <button class="zoom-button">Zoom View</button>
+          <button class="visualize-button">Visualize</button>
+          <button class="tvm-button">Time Value of Growth</button>
         </div>
         <div class="summary">
           <form id="user-form">
@@ -53,10 +53,20 @@
                 Who/What would you like to benchmark against?
               </span>
             </div>
-
+            <div><span class="compare-name"></span> is valued at around $<span id="compare-val"></span>:</div>
+            
+            <div class="this-is-else"></div>
             <button>Calculate</button>
           </form>
           
+        </div>
+        
+        <div>
+          Press 'Calculate' to see a visual representation of <span class="compare-name"></span>. 
+        </div>
+        
+        <div>
+          Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
         </div>
         
       </div>
@@ -67,21 +77,14 @@
         <div class="this-is-you">
           <div id="user-worth">This will represent the amount under "Net Worth"</div>
         </div>
-        <div class="this-is-else">
+        <!-- <div class="this-is-else">
           <div>
             We will compare to:
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="main-right-body">
-        <div><span class="compare-name"></span> is valued at around $<span id="compare-val"></span>:</div>
         <div class="blocks">
-          <div>
-            Press 'Calculate' to see a visual representation of <span class="compare-name"></span>. 
-          </div>
-          <div>
-            Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
-          </div>
         </div>
       </div>
     </div>
