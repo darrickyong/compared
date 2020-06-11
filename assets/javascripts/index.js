@@ -31,8 +31,6 @@ options.text( d => {
     return d.name;
   })
 
-const svg = d3.select(".blocks").append("svg");
-
 document.getElementsByClassName("user-savings")[0]
   .addEventListener("change", e => setYears(e));
 document.getElementsByClassName("user-contributions")[0]
@@ -44,6 +42,7 @@ document
   .getElementsByClassName("user-selection")[0]
   .addEventListener("change", (e) => {
     setYears(e);
+    // document.getElementsByClassName("compare-img")[0].src = netWorth[e.target.selectedIndex].img;
     compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
     compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
   }); 
@@ -150,10 +149,15 @@ const setYears = (e) => {
   return years;
 };
 
+const removeCharts = () => {
+  d3.select(".blockChart").remove();
+  d3.select(".lineChart").remove();
+}
+
 const update = (size) => {
-  svg.selectAll("rect").remove();
-  svg.selectAll("g").remove();
-  
+  removeCharts();
+  const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
+
   let block = svg
     .append("g")
     .attr("class", "cells")
@@ -197,8 +201,8 @@ const update = (size) => {
 };
 
 const drawChart = (e) => {
-  svg.selectAll("rect").remove();
-  svg.selectAll("g").remove();
+  removeCharts();
+  const svg = d3.select(".blocks").append("svg").attr("class", "lineChart");
 
   const baseSavings = document.getElementsByClassName("user-savings")[0].value;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
@@ -206,14 +210,14 @@ const drawChart = (e) => {
   const years = setYears(e);
   const data = createData(baseSavings, baseContributions, growth, years);
   
-  const height = 800;
-  const width = 1600;
+  const height = 500;
+  const width = 500;
 
   const minYear = d3.min(data, function(d) { return d.year });
   const maxYear = d3.max(data, function(d) { return d.year });
   const minVal = d3.min(data, function(d) { return d.value });
   const maxVal = d3.max(data, function(d) { return d.value });
-
+  // debugger
   const y = d3.scaleLinear()
               // .domain([minVal, maxVal])
               .domain([0, maxVal])
@@ -223,15 +227,15 @@ const drawChart = (e) => {
               .domain([minYear, maxYear])
               .range([0, width]);
 
-  const yAxis = d3.axisLeft(y);
-  const xAxis = d3.axisBottom(x);
+  const yAxis = d3.axisLeft(y)
+  const xAxis = d3.axisBottom(x).tickFormat(d3.format("d"));
 
   // svg
   //   .attr("height", "100%")
   //   .attr("width", "100%")
 
   const chartGroup = svg.append("g")
-                        .attr("transform", "translate(50, 50)")
+                        .attr("transform", "translate(100, 50)")
   
   const line = d3.line()
                   .x(function(d) {return x(d.year) })
@@ -253,7 +257,7 @@ const createData = (pv, pmt, rate, yrs) => {
   let currVal = parseFloat(pv);
   const data = [];
   for (let i = 0; i < yrs + 1; i++) {
-    data.push({year: currYear, value: currVal.toFixed(2)});
+    data.push({year: currYear, value: +currVal.toFixed(2)});
     currYear += 1;
     currVal = (currVal + pmt) * rate;
   }
