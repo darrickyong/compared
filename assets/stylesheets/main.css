@@ -124,3 +124,9 @@ rect {
   color: red;
   font-size: 14px;
 }
+
+path {
+  stroke: blue;
+  stroke-width: 2px;
+  fill: none;
+}

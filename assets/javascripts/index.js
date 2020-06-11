@@ -103,12 +103,7 @@ document.getElementsByClassName("tvm-button")[0]
   .addEventListener("click", e => drawChart(e));
 
 // Block visualization
-let block = svg
-  .append("g")
-  .attr("class", "cells")
-  .attr("transform", "translate(" + offset + "," + (offset) + ")")
-  // .attr("transform", "translate(0,0)")
-  .selectAll("rect");
+
 
 
 // Formulas
@@ -157,6 +152,15 @@ const setYears = (e) => {
 
 const update = (size) => {
   svg.selectAll("rect").remove();
+  svg.selectAll("g").remove();
+  
+  let block = svg
+    .append("g")
+    .attr("class", "cells")
+    .attr("transform", "translate(" + offset + "," + offset + ")")
+    // .attr("transform", "translate(0,0)")
+    .selectAll("rect");
+
   block = block.data(d3.range(size));
 
   block
@@ -193,13 +197,51 @@ const update = (size) => {
 };
 
 const drawChart = (e) => {
+  svg.selectAll("rect").remove();
+  svg.selectAll("g").remove();
+
   const baseSavings = document.getElementsByClassName("user-savings")[0].value;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
   const years = setYears(e);
   const data = createData(baseSavings, baseContributions, growth, years);
-  console.log(data);
   
+  const height = 800;
+  const width = 1600;
+
+  const minYear = d3.min(data, function(d) { return d.year });
+  const maxYear = d3.max(data, function(d) { return d.year });
+  const minVal = d3.min(data, function(d) { return d.value });
+  const maxVal = d3.max(data, function(d) { return d.value });
+
+  const y = d3.scaleLinear()
+              // .domain([minVal, maxVal])
+              .domain([0, maxVal])
+              .range([height, 0]);
+
+  const x = d3.scaleLinear()
+              .domain([minYear, maxYear])
+              .range([0, width]);
+
+  const yAxis = d3.axisLeft(y);
+  const xAxis = d3.axisBottom(x);
+
+  // svg
+  //   .attr("height", "100%")
+  //   .attr("width", "100%")
+
+  const chartGroup = svg.append("g")
+                        .attr("transform", "translate(50, 50)")
+  
+  const line = d3.line()
+                  .x(function(d) {return x(d.year) })
+                  .y(function(d) { return y(d.value) })
+  
+  chartGroup.append("path").attr("d", line(data));
+
+  chartGroup.append("g").attr("class", "x axis").attr("transform", "translate(0, "+height+")").call(xAxis);
+  chartGroup.append("g").attr("class", "y axis").call(yAxis);
+
 }
 
 const createData = (pv, pmt, rate, yrs) => {
