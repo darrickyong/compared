@@ -40,14 +40,26 @@ body {
 .user-form {
   display: flex;
   flex-direction: column;
+  font-size: 16px;
+}
+.user-form h1 {
+  font-size: 24px;
+}
+
+.user-form > * {
+  margin-top: 15px;
 }
 
 .user-form input {
   width: 75%;
   padding: 5px 5px 5px 7px;
-  margin: 0px;
+  margin: 8px 0px;
   border-radius: 5px;
-  border: none;
+  border: 1px solid #cccccc;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
 }
 
 .form-info {
@@ -73,9 +85,6 @@ body {
   margin: 0px 3px 0px 5px;
 }
 
-.this-is-else {
-}
-
 .compare-img {
   border-radius: 10px;
   border: none;
@@ -93,18 +102,25 @@ body {
 .blocks {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   width: 100%;
-  height: 940px;
+  min-height: 100%;
   /* border: 1px solid black; */
   overflow: scroll;
 }
 
 .blocks > svg {
   min-width: 5000%;
-  height: 100%;
+  min-height: 940px;
+  background: white;
   /* min-height: 165% */
 }
 
 rect {
   fill: green;
+}
+
+.errors {
+  color: red;
+  font-size: 14px;
 }

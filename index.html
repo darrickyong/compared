@@ -18,12 +18,14 @@
       <div class="main-left-container">
         <div class="summary">
           <form class="user-form">
-            <label>Current Savings (<div class="this-is-you">denoted by a</div>):
+            <h1>User Info</h1>
+            <label>Current Savings :
               <input 
                 type="number"
                 class="user-savings"
+                value="100000"
                 step="0.01" 
-                placeholder="Estimated savings">
+                placeholder="Total Savings">
                 <div class="form-info">
                   Note: Enter how much you have saved.
                 </div>
@@ -33,8 +35,9 @@
               <input 
                 type="number" 
                 class="user-contributions" 
+                value="25000"
                 setp="0.01" 
-                placeholder="Est. annual savings">
+                placeholder="Annual Savings">
                 <div class="form-info">
                   Note: Enter how much you plan to save annually.
                 </div>
@@ -46,7 +49,8 @@
                   type="number"
                   class="user-growth"
                   value="5.00"
-                  step="0.01">
+                  step="0.01"
+                  placeholder="Growth Rate">
                 %
               </span>
               <div class="form-info">
@@ -64,9 +68,12 @@
             
             <div class="this-is-else"></div>
             <button>Visualize</button>
+            <div class="errors">
+
+            </div>
           </form>
           <div class="tvm">
-            Given the NW, annual savings, and interest rate, it will take approximately <span id="years">0</span> years to be the same.
+            It will take approximately <span class="years">FOREVER</span> to bridge the disparity.
             <button class="tvm-button">View Time Value of Growth</button>
           </div>
         </div>
@@ -78,15 +85,12 @@
     <div class="main-right">
       <div class="main-right-container">
         <div class="blocks">
-          <div>Start: </div>
+          <span><div class="this-is-you">Your savings are represented by a single</div>. Scroll see more after clicking 'Visualize'!</span>
         </div>
       </div>
     </div>
   </div>
 
-
-  
-  <!-- d3 scripts -->
   <script src="./assets/javascripts/index.js"></script>
 </body>
 </html>

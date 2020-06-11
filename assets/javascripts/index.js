@@ -1,37 +1,5 @@
-const nper = (rate, cmpd, pmt, pv, fv) => {
-  fv = parseFloat(fv);
-  pmt = pmt === "" ? 0 : parseFloat(pmt);
-  pv = pv === "" ? 0 : parseFloat(pv);
-  cmpd = parseFloat(cmpd);
-
-  if (!pv && !pmt) return 0;
-  
-  let yrs;
-  rate = eval(rate / (cmpd * 100));
-  if (rate == 0) {
-    yrs = -(fv + pv) / pmt;
-  } else {
-    yrs =
-      Math.log((-fv * rate + pmt) / (pmt + rate * pv)) / Math.log(1 + rate);
-  }
-  yrs = conv_number(yrs);
-  return yrs < 0 ? 0 : yrs;
-};
-
-const conv_number = (expr) => {
-  if (expr === Infinity) return "FOREVER";
-  return parseFloat(expr.toFixed(2).toString()).toLocaleString("en");
-};
-
-const setYears = e => {
-  e.preventDefault();
-  let baseSavings = document.getElementsByClassName("user-savings")[0].value;
-  let baseContributions = document.getElementsByClassName("user-contributions")[0].value;
-  let growth = document.getElementsByClassName("user-growth")[0].value;
-  let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-  let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  document.getElementById("years").textContent = years;
-}
+const errors = document.getElementsByClassName("errors")[0];
+const savings = document.getElementsByClassName("user-savings")[0];
 const width = 2000;
 const height = 550;
 const offset = 20;
@@ -62,6 +30,15 @@ options.text( d => {
   .attr("value", d => {
     return d.name;
   })
+
+const svg = d3.select(".blocks").append("svg");
+
+document.getElementsByClassName("user-savings")[0]
+  .addEventListener("change", e => setYears(e));
+document.getElementsByClassName("user-contributions")[0]
+  .addEventListener("change", e => setYears(e));
+document.getElementsByClassName("user-growth")[0]
+  .addEventListener("change", e => setYears(e));
 
 document
   .getElementsByClassName("user-selection")[0]
@@ -96,33 +73,36 @@ const compareImg = d3
     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img
   );
 
-const compareVal = d3
-  .select("#compare-val")
-  .text(
-    conv_number(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val)
-  );
-
 // Vizualize
 document
   .getElementsByClassName("user-form")[0]
-  .addEventListener("submit", e => {
-    setYears(e);
-    document.getElementsByClassName("blocks")[0].scrollLeft = 0;
-    let baseline = document.getElementsByClassName("user-savings")[0].value;
-    let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-    debugger
-    if ((compare / baseline) > 40000) {
-      if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Are you sure you want to continue?")) {
-        update(compare / baseline);
-      } else return;
-    } else {
-      update(compare / baseline);
-    }
-  });
-  
-// Block visualization
-const svg = d3.select(".blocks").append("svg");
+    .addEventListener("submit", e => visualize(e));
 
+const visualize = e => {
+  errors.innerText = "";
+  savings.style.border = "none";
+  setYears(e);
+  document.getElementsByClassName("blocks")[0].scrollLeft = 0;
+  document.getElementsByClassName("blocks")[0].scrollTop = 0;
+  let baseline = document.getElementsByClassName("user-savings")[0].value;
+  let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+  if (!baseline) {
+    errors.innerText = "In order to visualize disparity, please enter your savings.";
+    savings.style.border="1px solid red";
+  } else if ((compare / baseline) > 40000) {
+    if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Confirm you still wish to continue.")) {
+      update(compare / baseline);
+    } else return;
+  } else {
+    update(compare / baseline);
+  }
+}
+
+// TVM visualization
+document.getElementsByClassName("tvm-button")[0]
+  .addEventListener("click", e => drawChart(e));
+
+// Block visualization
 let block = svg
   .append("g")
   .attr("class", "cells")
@@ -130,7 +110,52 @@ let block = svg
   // .attr("transform", "translate(0,0)")
   .selectAll("rect");
 
-const update = size => {
+
+// Formulas
+const nper = (rate, cmpd, pmt, pv, fv) => {
+  fv = parseFloat(fv);
+  pmt = pmt === "" ? 0 : parseFloat(pmt);
+  pv = pv === "" ? 0 : parseFloat(pv);
+  cmpd = parseFloat(cmpd);
+
+  if (!pv && !pmt) {
+    return "FOREVER";
+  }
+
+  let yrs;
+  rate = eval(rate / (cmpd * 100));
+  if (rate == 0) {
+    yrs = -(fv + pv) / pmt;
+  } else {
+    yrs = Math.log((-fv * rate + pmt) / (pmt + rate * pv)) / Math.log(1 + rate);
+  }
+  yrs = conv_number(yrs);
+  return yrs < 0 ? 0 : yrs;
+};
+
+const conv_number = (expr) => {
+  if (expr === Infinity) return "FOREVER";
+  return parseFloat(expr.toFixed(2).toString()).toLocaleString("en");
+};
+
+const compareVal = d3
+  .select("#compare-val")
+  .text(
+    conv_number(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val)
+  );
+
+const setYears = (e) => {
+  e.preventDefault();
+  let baseSavings = document.getElementsByClassName("user-savings")[0].value;
+  let baseContributions = document.getElementsByClassName("user-contributions")[0].value;
+  let growth = document.getElementsByClassName("user-growth")[0].value;
+  let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+  let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
+  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : `${years} years`;
+  return years;
+};
+
+const update = (size) => {
   svg.selectAll("rect").remove();
   block = block.data(d3.range(size));
 
@@ -139,28 +164,57 @@ const update = size => {
     .append("rect")
     .attr("width", 0)
     .attr("height", cellSize)
-    .attr("x", i => {
+    .attr("x", (i) => {
       const x0 = Math.floor(i / 1000);
       // const x0 = Math.floor(i / 500);
       const x1 = Math.floor((i % 100) / 10);
       // const x1 = Math.floor((i % 50) / 10);
-      const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
+      const xblock =
+        groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
       // const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 5);
       return xblock;
     })
-    .attr("y", i => {
+    .attr("y", (i) => {
       const y0 = Math.floor(i / 100) % 10;
       // const y0 = Math.floor(i / 50) % 10;
       const y1 = Math.floor(i % 10);
       // const y1 = Math.floor(i % 5);
-      const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+      const yblock =
+        groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
       // const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
       return yblock;
     })
     .transition()
     .delay(function (d, i) {
-      return (i) * updateDelay;
+      return i * updateDelay;
     })
     .duration(updateDuration)
     .attr("width", cellSize);
+};
+
+const drawChart = (e) => {
+  const baseSavings = document.getElementsByClassName("user-savings")[0].value;
+  const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
+  const growth = document.getElementsByClassName("user-growth")[0].value;
+  const years = setYears(e);
+  const data = createData(baseSavings, baseContributions, growth, years);
+  // console.log(data);
+  
+}
+
+const createData = (pv, pmt, rate, yrs) => {
+  pv = pv === "" ? 0 : parseFloat(pv);
+  pmt = pmt === "" ? 0 : parseFloat(pmt);
+  rate = 1 + rate/100;
+  yrs = parseFloat(yrs);
+  let currYear = new Date().getFullYear();
+  let currVal = parseFloat(pv);
+  const data = [];
+  for (let i = 0; i < yrs + 1; i++) {
+    data.push({[currYear]: currVal.toFixed(2)});
+    currYear += 1;
+    currVal = (currVal + pmt) * rate;
+  }
+  return data;
+  
 }
