@@ -198,7 +198,7 @@ const drawChart = (e) => {
   const growth = document.getElementsByClassName("user-growth")[0].value;
   const years = setYears(e);
   const data = createData(baseSavings, baseContributions, growth, years);
-  // console.log(data);
+  console.log(data);
   
 }
 
@@ -211,7 +211,7 @@ const createData = (pv, pmt, rate, yrs) => {
   let currVal = parseFloat(pv);
   const data = [];
   for (let i = 0; i < yrs + 1; i++) {
-    data.push({[currYear]: currVal.toFixed(2)});
+    data.push({year: currYear, value: currVal.toFixed(2)});
     currYear += 1;
     currVal = (currVal + pmt) * rate;
   }
