@@ -210,42 +210,74 @@ const drawChart = (e) => {
   const years = setYears(e);
   const data = createData(baseSavings, baseContributions, growth, years);
   
-  const height = 500;
-  const width = 500;
+  const margin = {top: 30, right: 20, bottom: 20, left: 100}
+  const chartSpace = document.getElementsByClassName("lineChart")[0];
+
+  const lineHeight = chartSpace.clientHeight - 100;
+  const lineWidth = chartSpace.clientWidth - 200;
+  const xAdjust = lineHeight + margin.top;
 
   const minYear = d3.min(data, function(d) { return d.year });
   const maxYear = d3.max(data, function(d) { return d.year });
   const minVal = d3.min(data, function(d) { return d.value });
   const maxVal = d3.max(data, function(d) { return d.value });
-  // debugger
+  
+  // Line Chart
+  const chartGroup = svg
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+  
+  // X and Y axis
   const y = d3.scaleLinear()
-              // .domain([minVal, maxVal])
-              .domain([0, maxVal])
-              .range([height, 0]);
+    .domain([0, maxVal])
+    .range([lineHeight, 0]);
 
   const x = d3.scaleLinear()
-              .domain([minYear, maxYear])
-              .range([0, width]);
+    .domain([minYear, maxYear])
+    .range([0, lineWidth]);
 
-  const yAxis = d3.axisLeft(y)
   const xAxis = d3.axisBottom(x).tickFormat(d3.format("d"));
+  const yAxis = d3.axisLeft(y)
+
+  chartGroup
+    .append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0, " + lineHeight + ")")
+    .call(xAxis);
+
+  chartGroup.append("g").attr("class", "y axis").call(yAxis);
+  
+  // X and Y gridlines
+  // const xGridlines = () => {
+  //   return d3.axisBottom(x).ticks(Math.floor(years));
+  // }
+
+  // const yGridlines = () => {
+  //   return d3.axisLeft(y).ticks(20);
+  // }
 
   // svg
-  //   .attr("height", "100%")
-  //   .attr("width", "100%")
+  //   .append("g")
+  //   .attr("class", "grid")
+  //   .attr("transform", "translate("+margin.left+", "+xAdjust+")")
+  //   .call(xGridlines().tickSize(-lineHeight).tickFormat(""));
+  // svg
+  //   .append("g")
+  //   .attr("class", "grid")
+  //   .attr("transform", "translate("+margin.left+", "+margin.top+")")
+  //   .call(yGridlines().tickSize(-lineWidth).tickFormat(""));
 
-  const chartGroup = svg.append("g")
-                        .attr("transform", "translate(100, 50)")
+  // Path
+  const line = d3
+    .line()
+    .x(function(d) {return x(d.year) })
+    .y(function(d) { return y(d.value) })
+
+  chartGroup
+    .append("path")
+    .attr("class", "graphline")
+    .attr("d",line(data));
   
-  const line = d3.line()
-                  .x(function(d) {return x(d.year) })
-                  .y(function(d) { return y(d.value) })
-  
-  chartGroup.append("path").attr("d", line(data));
-
-  chartGroup.append("g").attr("class", "x axis").attr("transform", "translate(0, "+height+")").call(xAxis);
-  chartGroup.append("g").attr("class", "y axis").call(yAxis);
-
 }
 
 const createData = (pv, pmt, rate, yrs) => {
@@ -264,3 +296,9 @@ const createData = (pv, pmt, rate, yrs) => {
   return data;
   
 }
+
+window.addEventListener("resize", (e) => {
+  if (document.getElementsByClassName("lineChart")[0]) {
+    drawChart(e);
+  }
+})

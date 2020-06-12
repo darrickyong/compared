@@ -8,6 +8,7 @@ body {
 .main {
   width: 95%;
   height: 95vh;
+  min-height: 740px;
   display: flex;
   background: #F2F2F2;
   border: none;
@@ -111,6 +112,10 @@ body {
   overflow: scroll;
 }
 
+.blocks > span {
+  padding-top: 20px;
+}
+
 .blockChart {
   min-width: 5000%;
   min-height: 940px;
@@ -119,8 +124,8 @@ body {
 }
 
 .lineChart {
-  min-width: 5000%;
-  min-height: 940px;
+  width: 100%;
+  height: 100%;
   /* background: white; */
   /* min-height: 165% */
 }
@@ -134,8 +139,36 @@ rect {
   font-size: 14px;
 }
 
-path {
-  stroke: blue;
+.graphline {
+  stroke: green;
   stroke-width: 2px;
   fill: none;
+  stroke-dasharray: 200%;
+  stroke-dashoffset: 200%;
+  animation: dash 4s linear 1s forwards;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 200%;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.axis path {
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.grid line {
+  stroke: lightslategray;
+  stroke-opacity: 0.5;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
 }
