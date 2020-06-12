@@ -422,7 +422,7 @@ const createData = (pv, pmt, rate, yrs) => {
   let currYear = new Date().getFullYear();
   let currVal = parseFloat(pv);
   const data = [];
-  for (let i = 0; i < yrs + 1; i++) {
+  for (let i = 0; i < yrs + 10; i++) {
     data.push({year: currYear, value: +currVal.toFixed(2)});
     currYear += 1;
     currVal = (currVal + pmt) * rate;
