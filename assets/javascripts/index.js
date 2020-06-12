@@ -129,7 +129,8 @@ const nper = (rate, cmpd, pmt, pv, fv) => {
 
 const conv_number = (expr) => {
   if (expr === Infinity) return "FOREVER";
-  return parseFloat(expr.toFixed(2).toString()).toLocaleString("en");
+  // debugger
+  return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2});
 };
 
 const compareVal = d3
@@ -201,27 +202,83 @@ const update = (size) => {
 };
 
 const drawChart = (e) => {
+  errors.innerText = "";
   removeCharts();
-  const svg = d3.select(".blocks").append("svg").attr("class", "lineChart");
-
+  
   const baseSavings = document.getElementsByClassName("user-savings")[0].value;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
+  // debugger
+  if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
+    errors.innerText = "Please enter either your savings and a growth rate or an estimated annual savings.";
+    return;
+  }
+  
   const years = setYears(e);
   const data = createData(baseSavings, baseContributions, growth, years);
   
+  const svg = d3.select(".blocks").append("svg").attr("class", "lineChart");
   const margin = {top: 30, right: 20, bottom: 20, left: 100}
   const chartSpace = document.getElementsByClassName("lineChart")[0];
-
   const lineHeight = chartSpace.clientHeight - 100;
   const lineWidth = chartSpace.clientWidth - 200;
-  const xAdjust = lineHeight + margin.top;
 
   const minYear = d3.min(data, function(d) { return d.year });
   const maxYear = d3.max(data, function(d) { return d.year });
   const minVal = d3.min(data, function(d) { return d.value });
   const maxVal = d3.max(data, function(d) { return d.value });
-  
+
+  const bisectDate = d3.bisector((d) => {
+    return d.year;
+  }).left;
+
+  const mousemove = () => {
+    const x0 = x.invert(d3.mouse(event.currentTarget)[0]);
+    const i = bisectDate(data, x0, 1);
+    const d0 = data[i - 1];
+    const d1 = data[i] === undefined ? d0 : data[i];
+    const d = x0 - d0.year > d1.year - x0 ? d1 : d0;
+    const xAdjust = x(d.year) + margin.left;
+    const yAdjust = y(d.value) + margin.top;
+    const widthAdjust = lineWidth * -1 + margin.left;
+
+    focus
+      .select("circle.y")
+      .attr("transform", "translate(" + xAdjust + ", " + yAdjust + ")");
+
+    focus
+      .select(".xLine")
+      .attr("transform", "translate(" + xAdjust + ", " + yAdjust + ")")
+      .attr("y2", lineHeight + margin.top - yAdjust);
+
+    focus
+      .select(".yLine")
+      // .attr("transform", "translate("+lineWidth * -1 +", "+yAdjust+")")
+      .attr("transform", "translate(" + widthAdjust + ", " + yAdjust + ")")
+      // .attr("x2", lineWidth + lineWidth);
+      .attr("x2", lineWidth + x(d.year));
+
+    focus
+      .select("text.y1")
+      .attr("transform", "translate("+xAdjust+", "+yAdjust+")")
+      .text("$" + conv_number(d.value))
+
+    focus
+      .select("text.y2")
+      .attr("transform", "translate(" + xAdjust + ", " + yAdjust + ")")
+      .text("$" + conv_number(d.value))
+
+    focus
+      .select("text.y3")
+      .attr("transform", "translate("+xAdjust+", "+yAdjust+")")
+      .text("Year " + d.year)
+
+    focus
+      .select("text.y4")
+      .attr("transform", "translate(" + xAdjust + ", " + yAdjust + ")")
+      .text("Year " + d.year)
+    
+  };
   // Line Chart
   const chartGroup = svg
     .append("g")
@@ -268,16 +325,93 @@ const drawChart = (e) => {
   //   .call(yGridlines().tickSize(-lineWidth).tickFormat(""));
 
   // Path
+  const lineSvg = svg
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+  const focus = svg
+    .append("g")
+    .style("display", "none");
+
   const line = d3
     .line()
     .x(function(d) {return x(d.year) })
     .y(function(d) { return y(d.value) })
 
-  chartGroup
+  // chartGroup
+  //   .append("path")
+  //   .attr("class", "graphline")
+  //   .attr("d",line(data));
+
+  lineSvg
     .append("path")
     .attr("class", "graphline")
     .attr("d",line(data));
+
+  svg
+    .append("rect")
+    .attr("width", lineWidth)
+    .attr("height", lineHeight)
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+    // .attr("opacity", 0.1)
+    .style("fill", "none")
+    .style("pointer-events", "all")
+    .on("mouseover", () => focus.style("display", null))
+    .on("mouseout", () => focus.style("display", "none"))
+    .on("mousemove", mousemove)
+
+  focus
+    .append("circle")
+    .attr("class", "y")
+    .style("fill", "none")
+    .style("stroke", "blue")
+    .attr("r", 5);
   
+  focus
+    .append("line")
+    .attr("class", "xLine")
+    .style("stroke", "green")
+    .style("stroke-dasharray", "3,3")
+    .style("opacity", 0.5)
+    .attr("y1", 0)
+    .attr("y2", lineHeight)
+
+  focus
+    .append("line")
+    .attr("class", "yLine")
+    .style("stroke", "red")
+    .style("stroke-dasharray", "3,3")
+    .style("opacity", 0.5)
+    .attr("x1", lineWidth)
+    .attr("x2", lineWidth)
+
+  focus
+    .append("text")
+    .attr("class", "y1")
+    .style("stroke", "white")
+    .style("stroke-width", "3.5px")
+    .attr("dx", 10)
+    .attr("dy", 35)
+  focus
+    .append("text")
+    .attr("class", "y2")
+    .attr("dx", 10)
+    .attr("dy", 35)
+
+  focus
+    .append("text")
+    .attr("class", "y3")
+    .style("stroke", "white")
+    .style("stroke-width", "3.5px")
+    .attr("dx", 10)
+    .attr("dy", 20)
+  focus
+    .append("text")
+    .attr("class", "y4")
+    .attr("dx", 10)
+    .attr("dy", 20)
+  
+
 }
 
 const createData = (pv, pmt, rate, yrs) => {

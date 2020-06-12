@@ -130,7 +130,8 @@ body {
   /* min-height: 165% */
 }
 
-rect {
+.this-is-you rect,
+.cells rect {
   fill: green;
 }
 
@@ -171,4 +172,8 @@ rect {
 
 .grid path {
   stroke-width: 0;
+}
+
+.y1, .y2, .y3, .y4 {
+  font-size: 14px;
 }
