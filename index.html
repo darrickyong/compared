@@ -16,69 +16,74 @@
   <div class="main">
     <div class="main-left">
       <div class="main-left-container">
-        <div class="summary">
-          <form class="user-form">
-            <h1>User Info</h1>
-            <label>Current Savings :
+        <div>
+          Instructions
+        </div>
+
+        <div class="user-info">
+          <h1>User Info</h1>
+          <label>Current Savings :
+            <input 
+              type="number"
+              class="user-savings"
+              step="0.01" 
+              placeholder="Total Savings">
+              <div class="form-info">
+                Note: Enter how much you have saved.
+              </div>
+          </label>
+
+          <label>Annual Savings:
+            <input 
+              type="number" 
+              class="user-contributions" 
+              setp="0.01" 
+              placeholder="Annual Savings">
+              <div class="form-info">
+                Note: Enter how much you plan to save annually.
+              </div>
+          </label>
+
+          <label>Annual Interest Rate: 
+            <span>
               <input 
                 type="number"
-                class="user-savings"
-                step="0.01" 
-                placeholder="Total Savings">
-                <div class="form-info">
-                  Note: Enter how much you have saved.
-                </div>
-            </label>
-
-            <label>Annual Savings:
-              <input 
-                type="number" 
-                class="user-contributions" 
-                setp="0.01" 
-                placeholder="Annual Savings">
-                <div class="form-info">
-                  Note: Enter how much you plan to save annually.
-                </div>
-            </label>
-
-            <label>Annual Interest Rate: 
-              <span>
-                <input 
-                  type="number"
-                  class="user-growth"
-                  value="5.00"
-                  step="0.01"
-                  placeholder="Growth Rate">
-                %
-              </span>
-              <div class="form-info">
-                Note: Enter an expected growth rate.
-              </div>
-            </label>
-            
-            <div class="user-compare">
-              <span>
-                Select benchmark below:
-              </span>
-              <select class="user-selection"></select>
-              <div> is valued at $<span id="compare-val"></span>.</div>
+                class="user-growth"
+                value="5.00"
+                step="0.01"
+                placeholder="Growth Rate">
+              %
+            </span>
+            <div class="form-info">
+              Note: Enter an expected growth rate.
             </div>
-            
-            <div class="this-is-else">
-              <!-- <img src="/assets/images/test.jpeg" class="compare-img"> -->
-            </div>
-            <button>Visualize</button>
-            <div class="errors">
+          </label>
+        </div>
 
-            </div>
-          </form>
-          <div class="tvm">
-            It will take approximately <span class="years">FOREVER</span> to bridge the disparity.
-            <button class="tvm-button">View Time Value of Growth</button>
+        <div>
+          <div class="user-compare">
+            <span>
+              Select benchmark below:
+            </span>
+            <select class="user-selection"></select>
+            <div> is valued at $<span id="compare-val"></span>.</div>
+          </div>
+          
+          <div class="this-is-else">
           </div>
         </div>
-        
-        
+
+        <div class="tvm">
+          It will take approximately <span class="years">FOREVER</span> to bridge the disparity.
+        </div>
+
+        <div>
+          <button class="visualize">Visualize</button>
+          <button class="tvm-button">View Time Value of Growth</button>
+        </div>
+
+        <div class="errors">
+        </div>
       </div>
     </div>
 

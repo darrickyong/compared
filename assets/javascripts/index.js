@@ -74,8 +74,8 @@ const compareImg = d3
 
 // Vizualize
 document
-  .getElementsByClassName("user-form")[0]
-    .addEventListener("submit", e => visualize(e));
+  .getElementsByClassName("visualize")[0]
+    .addEventListener("click", e => visualize(e));
 
 const visualize = e => {
   errors.innerText = "";
