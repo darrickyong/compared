@@ -4,7 +4,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #E5ECF4;
-  background: #545E75;
+  background: #717D98;
 
 }
 
@@ -13,9 +13,20 @@ header {
   font-size: 50px;
   font-family: 'Bungee', cursive;
   padding: 10px 0px;
-  background: -webkit-radial-gradient(#0C6291, #00CECB );
+  /* background: -webkit-radial-gradient(#0C6291, #0C6291, #00CECB); */
+  background: -webkit-radial-gradient(#00CECB, #00CECB, #0C6291);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+header:before {
+  content: "COMPARED";
+  position: absolute;
+  top: 10;
+  left: 10;
+  z-index: -1;
+  text-shadow: 1px 1px #318790;
 }
 
 h1 {
