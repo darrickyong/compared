@@ -3,58 +3,102 @@ body {
   flex-direction: column;;
   align-items: center;
   justify-content: center;
+  /* background: white; */
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  padding: 5px 8px;
+  border: none;
+  position: relative;
+}
+
+button:active {
+  top: 1px;
+}
+
+.visualize-button {
 }
 
 .main {
-  width: 95%;
+  width: 95vw;
   height: 95vh;
   min-height: 740px;
   display: flex;
-  background: #F2F2F2;
-  border: none;
-  border-radius: 15px;
+  /* background: #F2F2F2; */
+  /* border: none; */
+  /* border-radius: 15px; */
+  font-size: 14px;
 }
 
 .main-left {
   display: flex;
   align-items: center;
-  width: 275px;
+  width: 400px;
 }
 
 .main-left-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 90%;
+  height: 95%;
   padding: 0px 20px;
-  border-right: 1px solid slategray;
+  /* border-right: 1px solid slategray; */
 }
 
-.summary {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 14px;
-  height: 100%;
+.main-left-container > * {
+  /* border: 1px solid red; */
+}
+
+.how-to-use {
+  /* padding: 20px 20px 20px 30px;
+  background: #FF715B;
+  color: white;
+  border-radius: 5px; */
+}
+
+.how-to-use > ol{
+  list-style: decimal outside;
+}
+
+.how-to-use li {
+  margin-top: 3px;
+}
+
+.this-is-you {
+  display: inline-block;
+}
+
+.this-is-you svg {
+  margin: 0px 3px;
+}
+
+.this-is-you rect,
+.cells rect {
+  fill: green;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-}
-.user-info h1 {
-  font-size: 24px;
 }
 
-.user-info > * {
-  margin-top: 15px;
+.user-info label {
+  margin-top: 5px;
 }
 
 .user-info input {
   width: 75%;
-  padding: 5px 5px 5px 7px;
-  margin: 8px 0px;
+  padding: 3px 0px 3px 3px;
+  margin-top: 3px;
   border-radius: 5px;
   border: 1px solid #cccccc;
   -webkit-transition: all 0.5s ease-in-out;
@@ -63,27 +107,11 @@ body {
   -o-transition: all 0.5s ease-in-out;
 }
 
-.form-info {
-  font-size: 12px;
-  font-style: italic;
-  padding-left: 5px;
-}
-
-
-.main-right {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.this-is-you {
-  display: inline-block;
-}
-
-.this-is-you svg {
-  margin: 0px 3px 0px 5px;
+.benchmark > select {
+  margin: 10px 0px 10px 0px;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
 }
 
 .compare-img {
@@ -91,6 +119,14 @@ body {
   height: 150px;
   border-radius: 10px;
   border: none;
+}
+
+.main-right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .main-right-container {
@@ -112,10 +148,6 @@ body {
   overflow: scroll;
 }
 
-.blocks > span {
-  padding-top: 20px;
-}
-
 .blockChart {
   min-width: 5000%;
   min-height: 940px;
@@ -130,14 +162,10 @@ body {
   /* min-height: 165% */
 }
 
-.this-is-you rect,
-.cells rect {
-  fill: green;
-}
-
 .errors {
   color: red;
   font-size: 14px;
+  height: 40px;
 }
 
 .graphline {

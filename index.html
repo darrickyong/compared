@@ -16,8 +16,26 @@
   <div class="main">
     <div class="main-left">
       <div class="main-left-container">
-        <div>
-          Instructions
+        <div class="how-to-use">
+          <h1>How to Use</h1>
+          <ol>
+            <li>Fill in the information under User Info.</li>
+            <li>Select a Benchmark.</li>
+            <li>Click one of the following buttons:
+              <ul>
+                <li><button class="visualize-button">Visualize</button>
+                  <br>
+                  <span>Provides a block comparison of your current
+                  savings to the benchmark. Your savings are represented by a single
+                  <div class="this-is-you"></div>.</span>
+                </li>
+                <li><button class="grow-button">Grow My Savings</button>
+                  <br>
+                  <span>Graphs a time-series on how your money will grow over time.</span>
+                </li>
+              </ul>
+            </li>
+          </ol>
         </div>
 
         <div class="user-info">
@@ -28,9 +46,9 @@
               class="user-savings"
               step="0.01" 
               placeholder="Total Savings">
-              <div class="form-info">
+              <!-- <div class="form-info">
                 Note: Enter how much you have saved.
-              </div>
+              </div> -->
           </label>
 
           <label>Annual Savings:
@@ -39,9 +57,9 @@
               class="user-contributions" 
               setp="0.01" 
               placeholder="Annual Savings">
-              <div class="form-info">
+              <!-- <div class="form-info">
                 Note: Enter how much you plan to save annually.
-              </div>
+              </div> -->
           </label>
 
           <label>Annual Interest Rate: 
@@ -54,33 +72,26 @@
                 placeholder="Growth Rate">
               %
             </span>
-            <div class="form-info">
+            <!-- <div class="form-info">
               Note: Enter an expected growth rate.
-            </div>
+            </div> -->
           </label>
         </div>
 
-        <div>
-          <div class="user-compare">
-            <span>
-              Select benchmark below:
-            </span>
-            <select class="user-selection"></select>
-            <div> is valued at $<span id="compare-val"></span>.</div>
-          </div>
-          
-          <div class="this-is-else">
-          </div>
+        <div class="benchmark">
+          <h1>Benchmark</h1>
+          <select class="user-selection"></select>
+          <div> is valued at $<span id="compare-val"></span>.</div>
+          <div class="this-is-else"></div>
         </div>
 
         <div class="tvm">
-          It will take approximately <span class="years">FOREVER</span> to bridge the disparity.
+          The time it will take to bridge the value disparity is approximately
+          <br>
+          <span class="years">________</span>.
         </div>
 
-        <div>
-          <button class="visualize">Visualize</button>
-          <button class="tvm-button">View Time Value of Growth</button>
-        </div>
+
 
         <div class="errors">
         </div>
@@ -90,7 +101,7 @@
     <div class="main-right">
       <div class="main-right-container">
         <div class="blocks">
-          <span><div class="this-is-you">Your savings are represented by a single </div>. Scroll see more after clicking 'Visualize'!</span>
+          <!-- <span><div class="this-is-you">Your savings are represented by a single </div>. Scroll see more after clicking 'Visualize'!</span> -->
         </div>
       </div>
     </div>

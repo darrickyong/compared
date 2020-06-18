@@ -1,5 +1,7 @@
 const errors = document.getElementsByClassName("errors")[0];
 const savings = document.getElementsByClassName("user-savings")[0];
+const contributions = document.getElementsByClassName("user-contributions")[0];
+const growth = document.getElementsByClassName("user-growth")[0];
 const width = 2000;
 const height = 550;
 const offset = 20;
@@ -31,12 +33,9 @@ options.text( d => {
     return d.name;
   })
 
-document.getElementsByClassName("user-savings")[0]
-  .addEventListener("change", e => setYears(e));
-document.getElementsByClassName("user-contributions")[0]
-  .addEventListener("change", e => setYears(e));
-document.getElementsByClassName("user-growth")[0]
-  .addEventListener("change", e => setYears(e));
+savings.addEventListener("change", e => setYears(e));
+contributions.addEventListener("change", e => setYears(e));
+growth.addEventListener("change", e => setYears(e));
 
 document
   .getElementsByClassName("user-selection")[0]
@@ -61,8 +60,8 @@ const you = d3
 const compareImg = d3
   .select(".this-is-else")
   .append("svg")
-  .attr("width", "225px")
-  .attr("height", "150px")
+  // .attr("width", "225px")
+  // .attr("height", "150px")
   .attr("class", "compare-img")
   .append("image")
   .attr("width", "225px")
@@ -74,12 +73,13 @@ const compareImg = d3
 
 // Vizualize
 document
-  .getElementsByClassName("visualize")[0]
+  .getElementsByClassName("visualize-button")[0]
     .addEventListener("click", e => visualize(e));
 
 const visualize = e => {
-  errors.innerText = "";
-  savings.style.border = "none";
+  // errors.innerText = "";
+  // savings.style.border = "  border: 1px solid #cccccc";
+  removeCharts();
   setYears(e);
   document.getElementsByClassName("blocks")[0].scrollLeft = 0;
   document.getElementsByClassName("blocks")[0].scrollTop = 0;
@@ -98,7 +98,7 @@ const visualize = e => {
 }
 
 // TVM visualization
-document.getElementsByClassName("tvm-button")[0]
+document.getElementsByClassName("grow-button")[0]
   .addEventListener("click", e => drawChart(e));
 
 // Block visualization
@@ -151,6 +151,8 @@ const setYears = (e) => {
 };
 
 const removeCharts = () => {
+  errors.innerText = "";
+  savings.style.border = "1px solid #cccccc";
   d3.select(".blockChart").remove();
   d3.select(".lineChart").remove();
 }
@@ -209,9 +211,13 @@ const drawChart = (e) => {
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
   // debugger
-  if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
-    errors.innerText = "Please enter either your savings and a growth rate or an estimated annual savings.";
+  // if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
+  if (parseFloat(growth)) {
+    errors.innerText = "Please enter "
+    errors.innerText = "Please enter either 1) your savings and a growth rate or 2) an estimated annual savings amount.";
     return;
+  } else if (!baseContributions) {
+    errors.innerText = ""
   }
   
   const years = setYears(e);
