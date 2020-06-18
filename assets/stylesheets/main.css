@@ -192,6 +192,11 @@ li > div {
   width: 100%;
   min-height: 100%;
   overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+.blocks::-webkit-scrollbar {
+  display: none;
 }
 
 .blocks-header {
