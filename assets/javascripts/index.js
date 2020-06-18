@@ -13,7 +13,10 @@ const updateDelay = updateDuration / 500;
 
 const netWorth = [
   { "name": "COVID-19 Test", "val": 100, "img":"./assets/images/test.jpeg" },
-  { "name": "Median Bay Area house", "val": 928000, "img":"./assets/images/home.jpg" },
+  { "name": "Toyota Camry", "val": 24425, "img":"./assets/images/camry.jpeg" },
+  { "name": "Ferrari 458", "val": 250000, "img":"./assets/images/458.jpg" },
+  { "name": "Median Bay Area Home", "val": 928000, "img":"./assets/images/home.jpg" },
+  { "name": "Median Beverly Hills Mansion", "val": 3540000, "img":"./assets/images/mansion.jpg" },
   { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
   { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
