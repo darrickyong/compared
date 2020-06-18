@@ -3,7 +3,20 @@ body {
   flex-direction: column;;
   align-items: center;
   justify-content: center;
-  /* background: white; */
+  
+  background: #E5ECF4;
+}
+
+header {
+  color: white;
+  /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+  font-size: 50px;
+  font-family: 'Bungee', cursive;
+  padding: 10px 0px;
+  /* background: -webkit-linear-gradient(#eee, #333); */
+  background: -webkit-radial-gradient(#0C6291, #00CECB );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h1 {
@@ -12,30 +25,17 @@ h1 {
   text-decoration: underline;
 }
 
-button {
-  cursor: pointer;
-  margin-bottom: 3px;
-  border-radius: 5px;
-  padding: 5px 8px;
-  border: none;
-  position: relative;
-}
 
-button:active {
-  top: 1px;
-}
-
-.visualize-button {
-}
 
 .main {
   width: 95vw;
-  height: 95vh;
+  height: 90vh;
   min-height: 740px;
   display: flex;
   /* background: #F2F2F2; */
   /* border: none; */
   /* border-radius: 15px; */
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
 }
 
@@ -43,6 +43,9 @@ button:active {
   display: flex;
   align-items: center;
   width: 400px;
+  background: #70798C;
+  border-radius: 15px;
+  color: #E5ECF4;
 }
 
 .main-left-container {
@@ -73,6 +76,39 @@ button:active {
   margin-top: 3px;
 }
 
+button {
+  cursor: pointer;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  border: none;
+  position: relative;
+  color: white;
+  text-shadow: 1px 1px 0 #318790;
+}
+
+button:active {
+  top: 2px;
+  left: 2px;
+  box-shadow: none;
+}
+
+.visualize-button {
+  background: #00CECB;
+  box-shadow: 2px 2px #0C6291;
+}
+
+.grow-button {
+  background: #0C6291;
+  box-shadow: 2px 2px #00CECB;
+}
+
+li > span {
+  font-size: 12px;
+  font-style: italic;
+}
+
+
 .this-is-you {
   display: inline-block;
 }
@@ -84,6 +120,11 @@ button:active {
 .this-is-you rect,
 .cells rect {
   fill: green;
+  opacity: 0.8;
+}
+
+.cells rect:hover {
+  opacity: 1;
 }
 
 .user-info {
@@ -96,7 +137,7 @@ button:active {
 }
 
 .user-info input {
-  width: 75%;
+  width: 65%;
   padding: 3px 0px 3px 3px;
   margin-top: 3px;
   border-radius: 5px;
@@ -146,6 +187,10 @@ button:active {
   min-height: 100%;
   /* border: 1px solid black; */
   overflow: scroll;
+}
+
+.blocks > span {
+  padding-left: 20px;
 }
 
 .blockChart {

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./assets/stylesheets/master.css" rel="stylesheet">
   <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Bungee&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <title>Compared</title>
 </head>
@@ -26,8 +28,7 @@
                 <li><button class="visualize-button">Visualize</button>
                   <br>
                   <span>Provides a block comparison of your current
-                  savings to the benchmark. Your savings are represented by a single
-                  <div class="this-is-you"></div>.</span>
+                  savings to the benchmark.</span>
                 </li>
                 <li><button class="grow-button">Grow My Savings</button>
                   <br>
@@ -45,13 +46,14 @@
               type="number"
               class="user-savings"
               step="0.01" 
+              value="180"
               placeholder="Total Savings">
               <!-- <div class="form-info">
                 Note: Enter how much you have saved.
               </div> -->
           </label>
 
-          <label>Annual Savings:
+          <label>Amount to Save Annually:
             <input 
               type="number" 
               class="user-contributions" 
@@ -86,9 +88,8 @@
         </div>
 
         <div class="tvm">
-          The time it will take to bridge the value disparity is approximately
-          <br>
-          <span class="years">________</span>.
+          The time it will take to bridge the value disparity is
+          <span class="years">......</span>.
         </div>
 
 
@@ -101,7 +102,8 @@
     <div class="main-right">
       <div class="main-right-container">
         <div class="blocks">
-          <!-- <span><div class="this-is-you">Your savings are represented by a single </div>. Scroll see more after clicking 'Visualize'!</span> -->
+          <span>Visualize! - Scroll around to see more! <div class="this-is-you">Your current savings are represented by a single </div>. </span>
+          <span>Grow My Savings! - Mouse around to see saving early begins your exponential growth!</span>
         </div>
       </div>
     </div>

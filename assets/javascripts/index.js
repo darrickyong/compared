@@ -101,20 +101,12 @@ const visualize = e => {
 document.getElementsByClassName("grow-button")[0]
   .addEventListener("click", e => drawChart(e));
 
-// Block visualization
-
-
-
 // Formulas
 const nper = (rate, cmpd, pmt, pv, fv) => {
   fv = parseFloat(fv);
   pmt = pmt === "" ? 0 : parseFloat(pmt);
   pv = pv === "" ? 0 : parseFloat(pv);
   cmpd = parseFloat(cmpd);
-
-  if (!pv && !pmt) {
-    return "FOREVER";
-  }
 
   let yrs;
   rate = eval(rate / (cmpd * 100));
@@ -146,13 +138,15 @@ const setYears = (e) => {
   let growth = document.getElementsByClassName("user-growth")[0].value;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : `${years} years`;
+  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark!`:`approximately ${years} years`;
   return years;
 };
 
 const removeCharts = () => {
   errors.innerText = "";
   savings.style.border = "1px solid #cccccc";
+  contributions.style.border = "1px solid #cccccc";
+  growth.style.border = "1px solid #cccccc";
   d3.select(".blockChart").remove();
   d3.select(".lineChart").remove();
 }
@@ -212,12 +206,17 @@ const drawChart = (e) => {
   const growth = document.getElementsByClassName("user-growth")[0].value;
   // debugger
   // if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
-  if (parseFloat(growth)) {
-    errors.innerText = "Please enter "
-    errors.innerText = "Please enter either 1) your savings and a growth rate or 2) an estimated annual savings amount.";
+  if (parseFloat(growth) && (!baseSavings && !baseContributions)) {
+    errors.innerText = "Please enter your current savings or an amount to save annually."
+    savings.style.border = "1px solid red";
+    contributions.style.border = "1px solid red";
+    // errors.innerText = "Please enter either 1) your savings and a growth rate or 2) an estimated annual savings amount.";
     return;
-  } else if (!baseContributions) {
-    errors.innerText = ""
+  } else if (!parseFloat(growth) && !baseSavings && !baseContributions) {
+    errors.innerText = "Please enter both your current savings and an amount to save annually."
+    savings.style.border = "1px solid red";
+    contributions.style.border = "1px solid red";
+    return;
   }
   
   const years = setYears(e);
