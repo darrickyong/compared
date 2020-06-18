@@ -13,7 +13,6 @@ header {
   font-size: 50px;
   font-family: 'Bungee', cursive;
   padding: 10px 0px;
-  /* background: -webkit-radial-gradient(#0C6291, #0C6291, #00CECB); */
   background: -webkit-radial-gradient(#00CECB, #00CECB, #0C6291);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -192,27 +191,28 @@ li > div {
   justify-content: flex-start;
   width: 100%;
   min-height: 100%;
-  /* border: 1px solid black; */
   overflow: scroll;
 }
 
 .blocks-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 35px;
   padding-left: 20px;
   font-size: 14px;
+  color: #E8F1F2;
+
 }
 
 .blockChart {
   min-width: 5000%;
   min-height: 940px;
-  /* background: white; */
-  /* min-height: 165% */
 }
 
 .lineChart {
   width: 100%;
   height: 100%;
-  /* background: white; */
-  /* min-height: 165% */
 }
 
 .errors {

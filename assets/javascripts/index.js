@@ -41,7 +41,6 @@ document
   .getElementsByClassName("user-selection")[0]
   .addEventListener("change", (e) => {
     setYears(e);
-    // document.getElementsByClassName("compare-img")[0].src = netWorth[e.target.selectedIndex].img;
     compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
     compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
   }); 
@@ -59,8 +58,6 @@ const you = d3
 const compareImg = d3
   .select(".this-is-else")
   .append("svg")
-  // .attr("width", "225px")
-  // .attr("height", "150px")
   .attr("class", "compare-img")
   .append("image")
   .attr("width", "270")
@@ -76,8 +73,6 @@ document
     .addEventListener("click", e => visualize(e));
 
 const visualize = e => {
-  // errors.innerText = "";
-  // savings.style.border = "  border: 1px solid #cccccc";
   removeCharts();
   setYears(e);
   document.getElementsByClassName("blocks")[0].scrollLeft = 0;
@@ -120,7 +115,6 @@ const nper = (rate, cmpd, pmt, pv, fv) => {
 
 const conv_number = (expr) => {
   if (expr === Infinity) return "FOREVER";
-  // debugger
   return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2});
 };
 
@@ -158,7 +152,6 @@ const update = (size) => {
     .append("g")
     .attr("class", "cells")
     .attr("transform", "translate(" + offset + "," + offset + ")")
-    // .attr("transform", "translate(0,0)")
     .selectAll("rect");
 
   block = block.data(d3.range(size));
@@ -203,13 +196,11 @@ const drawChart = (e) => {
   const baseSavings = document.getElementsByClassName("user-savings")[0].value;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
-  // debugger
-  // if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
+
   if (parseFloat(growth) && (!parseFloat(baseSavings) && !parseFloat(baseContributions))) {
     errors.innerText = "Please enter your current savings or an amount to save annually."
     savings.style.border = "1px solid red";
     contributions.style.border = "1px solid red";
-    // errors.innerText = "Please enter either 1) your savings and a growth rate or 2) an estimated annual savings amount.";
     return;
   } else if (!parseFloat(growth) && !parseFloat(baseSavings) && !parseFloat(baseContributions)) {
     errors.innerText = "Please enter both your current savings and an amount to save annually."
@@ -257,9 +248,7 @@ const drawChart = (e) => {
 
     focus
       .select(".yLine")
-      // .attr("transform", "translate("+lineWidth * -1 +", "+yAdjust+")")
       .attr("transform", "translate(" + widthAdjust + ", " + yAdjust + ")")
-      // .attr("x2", lineWidth + lineWidth);
       .attr("x2", lineWidth + x(d.year));
 
     focus
@@ -342,11 +331,6 @@ const drawChart = (e) => {
     .x(function(d) {return x(d.year) })
     .y(function(d) { return y(d.value) })
 
-  // chartGroup
-  //   .append("path")
-  //   .attr("class", "graphline")
-  //   .attr("d",line(data));
-
   lineSvg
     .append("path")
     .attr("class", "graphline")
@@ -357,7 +341,6 @@ const drawChart = (e) => {
     .attr("width", lineWidth)
     .attr("height", lineHeight)
     .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
-    // .attr("opacity", 0.1)
     .style("fill", "none")
     .style("pointer-events", "all")
     .on("mouseover", () => focus.style("display", null))
