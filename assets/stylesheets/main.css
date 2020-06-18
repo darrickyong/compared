@@ -194,22 +194,18 @@ li > div {
   min-height: 100%;
   overflow: scroll;
   box-sizing: content-box;
-  /* -ms-overflow-style: none; */
 }
-
-/* .blocks::-webkit-scrollbar {
-  display: none;
-} */
 
 .blocks-header {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 35px;
   padding-left: 20px;
   font-size: 14px;
   color: #E8F1F2;
+}
 
+.blocks-header > div {
+  margin-bottom: 5px;
 }
 
 .blockChart {

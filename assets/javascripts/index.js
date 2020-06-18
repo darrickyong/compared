@@ -12,7 +12,7 @@ const updateDuration = 125;
 const updateDelay = updateDuration / 500;
 
 const netWorth = [
-  { "name": "Test", "val": 500000, "img":"./assets/images/test.jpeg" },
+  { "name": "COVID-19 Test", "val": 100, "img":"./assets/images/test.jpeg" },
   { "name": "Median Bay Area house", "val": 928000, "img":"./assets/images/home.jpg" },
   { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
   { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
