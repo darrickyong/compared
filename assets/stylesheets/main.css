@@ -183,6 +183,7 @@ li > div {
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .blocks {
@@ -192,12 +193,13 @@ li > div {
   width: 100%;
   min-height: 100%;
   overflow: scroll;
-  -ms-overflow-style: none;
+  box-sizing: content-box;
+  /* -ms-overflow-style: none; */
 }
 
-.blocks::-webkit-scrollbar {
+/* .blocks::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .blocks-header {
   display: flex;
