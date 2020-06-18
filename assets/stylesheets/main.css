@@ -3,29 +3,106 @@ body {
   flex-direction: column;;
   align-items: center;
   justify-content: center;
-  background: #E5ECF4;
   background: #717D98;
 
 }
 
 header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 40px;
+}
+
+.logo {
   color: white;
   font-size: 50px;
   font-family: 'Bungee', cursive;
-  padding: 10px 0px;
   background: -webkit-radial-gradient(#00CECB, #00CECB, #0C6291);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
 }
 
-header:before {
+.logo:before {
   content: "COMPARED";
   position: absolute;
   top: 10;
   left: 10;
   z-index: -1;
   text-shadow: 1px 1px #318790;
+}
+
+.linkedin-icon {
+  position: relative;
+}
+
+.linkedin-sq {
+  color: #1177B5;
+}
+.linkedin {
+  color: #fff;
+  font-size: 40px;
+}
+
+.linkedin-icon:hover .linkedin-sq {
+  color: #fff;
+}
+
+.linkedin-icon:hover .linkedin {
+  color: #1177B5;
+}
+
+.linkedin-icon:active {
+  top: 1px;
+}
+
+.github-icon {
+  position: relative;
+}
+
+.github-sq {
+  color: #717D98;
+}
+
+.github {
+  color: #fff;
+  font-size: 40px;
+}
+
+.github-icon:hover .github {
+  color: #0e0e0e;
+}
+
+.github-icon:active {
+  top: 1px;
+}
+
+.angel-icon {
+  position: relative;
+}
+
+.angel-sq {
+  color: #717D98;
+}
+
+.angel {
+  color: #cccccc;
+  font-size: 40px;
+}
+
+.angel-icon:hover .angel {
+  color: #0e0e0e;
+}
+.angel-icon:active {
+  top: 1px;
 }
 
 h1 {
