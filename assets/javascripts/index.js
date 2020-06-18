@@ -55,7 +55,6 @@ const you = d3
   .append("rect")
   .attr("width", cellSize)
   .attr("height", cellSize)
-  .style("fill", "green");
 
 const compareImg = d3
   .select(".this-is-else")
@@ -64,8 +63,8 @@ const compareImg = d3
   // .attr("height", "150px")
   .attr("class", "compare-img")
   .append("image")
-  .attr("width", "225px")
-  .attr("height", "150px")
+  .attr("width", "270")
+  .attr("height", "180px")
   .attr(
     "xlink:href",
     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img
@@ -206,13 +205,13 @@ const drawChart = (e) => {
   const growth = document.getElementsByClassName("user-growth")[0].value;
   // debugger
   // if ((!baseSavings || !parseFloat(growth)) && !baseContributions) {
-  if (parseFloat(growth) && (!baseSavings && !baseContributions)) {
+  if (parseFloat(growth) && (!parseFloat(baseSavings) && !parseFloat(baseContributions))) {
     errors.innerText = "Please enter your current savings or an amount to save annually."
     savings.style.border = "1px solid red";
     contributions.style.border = "1px solid red";
     // errors.innerText = "Please enter either 1) your savings and a growth rate or 2) an estimated annual savings amount.";
     return;
-  } else if (!parseFloat(growth) && !baseSavings && !baseContributions) {
+  } else if (!parseFloat(growth) && !parseFloat(baseSavings) && !parseFloat(baseContributions)) {
     errors.innerText = "Please enter both your current savings and an amount to save annually."
     savings.style.border = "1px solid red";
     contributions.style.border = "1px solid red";
@@ -282,8 +281,8 @@ const drawChart = (e) => {
       .select("text.y4")
       .attr("transform", "translate(" + xAdjust + ", " + yAdjust + ")")
       .text("Year " + d.year)
-    
   };
+
   // Line Chart
   const chartGroup = svg
     .append("g")
@@ -369,32 +368,34 @@ const drawChart = (e) => {
     .append("circle")
     .attr("class", "y")
     .style("fill", "none")
-    .style("stroke", "blue")
+    .style("stroke", "#EEE5E9")
     .attr("r", 5);
   
   focus
     .append("line")
     .attr("class", "xLine")
-    .style("stroke", "green")
-    .style("stroke-dasharray", "3,3")
+    .style("stroke", "#92DCE5")
+    .style("stroke-width", "1.5")
+    .style("stroke-dasharray", "5")
     .style("opacity", 0.5)
     .attr("y1", 0)
-    .attr("y2", lineHeight)
+    .attr("y2", lineHeight);
 
   focus
     .append("line")
     .attr("class", "yLine")
-    .style("stroke", "red")
-    .style("stroke-dasharray", "3,3")
+    .style("stroke", "#92DCE5")
+    .style("stroke-width", "1.5")
+    .style("stroke-dasharray", "5")
     .style("opacity", 0.5)
     .attr("x1", lineWidth)
-    .attr("x2", lineWidth)
+    .attr("x2", lineWidth);
 
   focus
     .append("text")
     .attr("class", "y1")
-    .style("stroke", "white")
-    .style("stroke-width", "3.5px")
+    .style("stroke", "#39393A")
+    .style("stroke-width", "3px")
     .attr("dx", 10)
     .attr("dy", 35)
   focus
@@ -406,8 +407,8 @@ const drawChart = (e) => {
   focus
     .append("text")
     .attr("class", "y3")
-    .style("stroke", "white")
-    .style("stroke-width", "3.5px")
+    .style("stroke", "#39393A")
+    .style("stroke-width", "3px")
     .attr("dx", 10)
     .attr("dy", 20)
   focus

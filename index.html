@@ -27,12 +27,12 @@
               <ul>
                 <li><button class="visualize-button">Visualize</button>
                   <br>
-                  <span>Provides a block comparison of your current
-                  savings to the benchmark.</span>
+                  <div>Provides a block comparison of your current
+                  savings to the benchmark.</div>
                 </li>
                 <li><button class="grow-button">Grow My Savings</button>
                   <br>
-                  <span>Graphs a time-series on how your money will grow over time.</span>
+                  <div>Graphs a time-series to show how your money grows over time.</div>
                 </li>
               </ul>
             </li>
@@ -46,7 +46,6 @@
               type="number"
               class="user-savings"
               step="0.01" 
-              value="180"
               placeholder="Total Savings">
               <!-- <div class="form-info">
                 Note: Enter how much you have saved.
@@ -102,8 +101,10 @@
     <div class="main-right">
       <div class="main-right-container">
         <div class="blocks">
-          <span>Visualize! - Scroll around to see more! <div class="this-is-you">Your current savings are represented by a single </div>. </span>
-          <span>Grow My Savings! - Mouse around to see saving early begins your exponential growth!</span>
+          <div class="blocks-header">
+            <div>Visualize! - Scroll around to see more! Your current savings are represented by a single <div class="this-is-you"></div>. </div>
+            <div>Grow My Savings! - Mouse around to see how saving early begins your exponential growth!</div>
+          </div>
         </div>
       </div>
     </div>
