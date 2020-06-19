@@ -134,7 +134,7 @@ const setYears = (e) => {
   let growth = document.getElementsByClassName("user-growth")[0].value;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark!`:`approximately ${years} years`;
+  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`approximately ${years} years`;
   return years;
 };
 
