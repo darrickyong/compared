@@ -402,7 +402,6 @@ const drawChart = (e) => {
     .attr("class", "y4")
     .attr("dx", 10)
     .attr("dy", 20)
-  
 
 }
 
