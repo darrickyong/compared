@@ -7,7 +7,7 @@ Compared is a front-end app providing a data visualization of wealth disparity. 
 
 ## Block Representation
 
-![](https://github.com/darrickyong/compared/blob/master/assets/images/block.png)
+![](https://github.com/darrickyong/compared/blob/master/assets/images/visualize.gif)
 
 Fill in your current savings, select a benchmark, and click "Visualize" to see a block comparison. Your current savings are represented by a single block.
 
@@ -40,7 +40,7 @@ Blocks are generated individually and transitioned in using the below method:
 
 ## Growth of Savings Over Time
 
-![](https://github.com/darrickyong/compared/blob/master/assets/images/line.png)
+![](https://github.com/darrickyong/compared/blob/master/assets/images/grow.gif)
 
 Fill in one of the following combinations and click "Grow My Savings".
 

@@ -9,7 +9,7 @@ const groupSpacing = 0;
 const cellSpacing = 1;
 const cellSize = 8;
 const updateDuration = 125;
-const updateDelay = updateDuration / 500;
+const updateDelay = updateDuration / 250;
 
 const netWorth = [
   { "name": "COVID-19 Test", "val": 100, "img":"./assets/images/test.jpeg" },
