@@ -52,63 +52,68 @@
   <div class="main">
     <div class="main-left">
       <div class="main-left-container">
-        <div class="how-to-use">
-          <h1>How to Use</h1>
+        <div class="instructions">
+          <h1>Instructions</h1>
           <ol>
-            <li>Fill in the information under User Info.</li>
-            <li>Select a Benchmark.</li>
-            <li>Click one of the following buttons:
-              <ul>
-                <li><button class="visualize-button">Visualize</button>
+
+            <li>Fill in the below information:</li>
+              <div class="user-info">
+                <label>Current Savings:
+                  <input 
+                    type="number"
+                    class="user-savings"
+                    step="0.01" 
+                    placeholder="Total Savings">
+                </label>
+      
+                <label>Amount to Save Annually:
+                  <input 
+                    type="number" 
+                    class="user-contributions" 
+                    setp="0.01" 
+                    placeholder="Annual Savings">
+                </label>
+      
+                <label>Annual Interest Rate: 
+                  <span>
+                    <input 
+                      type="number"
+                      class="user-growth"
+                      value="5.00"
+                      step="0.01"
+                      placeholder="Growth Rate">
+                    %
+                  </span>
+                </label>
+              </div>
+
+            <li>Select a benchmark:</li>
+              <div class="benchmark">
+                <select class="user-selection"></select>
+                <div> is valued at $<span id="compare-val"></span></div>
+                <div class="this-is-else"></div>
+              </div>
+
+            <li>Click one of the following buttons:</li>
+
+              <div class="buttons">
+                <div><button class="visualize-button">Visualize</button>
                   <br>
-                  <div>Provides a block comparison of your current
-                  savings to the benchmark.</div>
-                </li>
-                <li><button class="grow-button">Grow My Savings</button>
+                  <div>Provides a block comparison of your current savings to the benchmark. 
+                  Your current savings are represented by a single <div class="this-is-you"></div>. 
+                  If the difference is large enough, scroll to the right to see more!
+                  </div>
+                </div>
+                
+                <div><button class="grow-button">Grow My Savings</button>
                   <br>
-                  <div>Graphs a time-series to show how your money grows over time.</div>
-                </li>
-              </ul>
-            </li>
+                  <div>Graphs a time-series to show how your money grows over time. Mouse around to see how saving early has exponential growth! After reaching your goal, an extra 10 years of growth are
+                  shown!</div>
+                </div>
+
+              </div>
+
           </ol>
-        </div>
-
-        <div class="user-info">
-          <h1>User Info</h1>
-          <label>Current Savings :
-            <input 
-              type="number"
-              class="user-savings"
-              step="0.01" 
-              placeholder="Total Savings">
-          </label>
-
-          <label>Amount to Save Annually:
-            <input 
-              type="number" 
-              class="user-contributions" 
-              setp="0.01" 
-              placeholder="Annual Savings">
-          </label>
-
-          <label>Annual Interest Rate: 
-            <span>
-              <input 
-                type="number"
-                class="user-growth"
-                value="5.00"
-                step="0.01"
-                placeholder="Growth Rate">
-              %
-            </span>
-          </label>
-        </div>
-
-        <div class="benchmark">
-          <h1>Benchmark</h1>
-          <select class="user-selection"></select>
-          <div> is valued at $<span id="compare-val"></span></div>
-          <div class="this-is-else"></div>
         </div>
 
         <div class="tvm">
@@ -116,10 +121,9 @@
           <span class="years">......</span>.
         </div>
 
-
-
         <div class="errors">
         </div>
+
       </div>
     </div>
 
@@ -127,8 +131,7 @@
       <div class="main-right-container">
         <div class="blocks">
           <div class="blocks-header">
-            <div><strong>Visualize!</strong> - Your current savings are represented by a single <div class="this-is-you"></div>. If the difference is large enough, scroll to the right to see more! </div>
-            <div><strong>Grow My Savings!</strong> - Mouse around to see how saving early has exponential growth! After reaching your goal, an extra 10 years of growth are shown!</div>
+            
           </div>
         </div>
       </div>

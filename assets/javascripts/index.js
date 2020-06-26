@@ -12,7 +12,7 @@ const updateDuration = 125;
 const updateDelay = updateDuration / 250;
 
 const netWorth = [
-  { "name": "COVID-19 Test", "val": 100, "img":"./assets/images/test.jpeg" },
+  { "name": "iPhone Pro", "val": 1000, "img":"./assets/images/iphone.jpg" },
   { "name": "Toyota Camry", "val": 24425, "img":"./assets/images/camry.jpeg" },
   { "name": "Ferrari 458", "val": 250000, "img":"./assets/images/458.jpg" },
   { "name": "Median Bay Area Home", "val": 928000, "img":"./assets/images/home.jpg" },

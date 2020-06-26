@@ -108,7 +108,11 @@ header {
 h1 {
   font-size: 18px;
   font-weight: bold;
-  text-decoration: underline;
+  
+}
+
+h2 {
+  font-size: 16px;
 }
 
 .main {
@@ -134,16 +138,100 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 95%;
+  height: 100%;
   padding: 0px 20px;
 }
 
-.how-to-use > ol{
+.instructions > ol{
   list-style: decimal outside;
 }
 
-.how-to-use li {
-  margin-top: 5px;
+.instructions li {
+  margin: 10px 0px;
+  text-decoration: underline;
+}
+
+.this-is-you {
+  display: inline-block;
+}
+
+.this-is-you svg {
+  margin: 0px 2px;
+}
+
+.this-is-you rect,
+.cells rect {
+  fill: #04E762;
+  opacity: 0.8;
+}
+
+.cells rect:hover {
+  opacity: 1;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.user-info label {
+  margin-bottom: 5px;
+}
+
+.user-info input {
+  width: 65%;
+  padding: 5px;
+  margin-top: 3px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+}
+
+.benchmark {
+  margin-left: 10px;
+}
+.benchmark > select {
+  margin-bottom: 5px;
+  font-family: 'Poppins', sans-serif;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+.this-is-else {
+  margin-top: 10px;
+}
+
+.compare-img {
+  width: 270px;
+  height: 180px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.8s;
+}
+
+.compare-img:hover{
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.buttons {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.buttons > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 button {
@@ -178,71 +266,8 @@ button:active {
   box-shadow: 2px 2px #00CECB;
 }
 
-li > div {
-  font-size: 12px;
-  font-style: italic;
-  padding-left: 5px;
-}
-
-
-.this-is-you {
-  display: inline-block;
-}
-
-.this-is-you svg {
-  margin: 0px 5px 2px 2px;
-}
-
-.this-is-you rect,
-.cells rect {
-  fill: #04E762;
-  opacity: 0.8;
-}
-
-.cells rect:hover {
-  opacity: 1;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-info label {
-  margin-top: 5px;
-}
-
-.user-info input {
-  width: 65%;
-  padding: 3px 0px 3px 3px;
-  margin-top: 3px;
-  border-radius: 5px;
-  border: 1px solid #cccccc;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-}
-
-.benchmark > select {
-  margin: 5px 0px;
-  font-family: 'Poppins', sans-serif;
-  padding: 3px;
-  border-radius: 5px;
-  border: 1px solid #cccccc;
-}
-
-.compare-img {
-  width: 270px;
-  height: 180px;
-  border-radius: 10px;
-  border: none;
-  transition: 0.8s;
-}
-
-.compare-img:hover{
-  cursor: pointer;
-  transform: scale(1.04);
+.years {
+  
 }
 
 .main-right {
