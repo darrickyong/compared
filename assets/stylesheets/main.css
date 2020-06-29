@@ -23,7 +23,7 @@ header {
 
 .logo {
   color: white;
-  font-size: 50px;
+  font-size: 40px;
   font-family: 'Bungee', cursive;
   background: -webkit-radial-gradient(#00CECB, #00CECB, #0C6291);
   -webkit-background-clip: text;
@@ -45,18 +45,14 @@ header {
 }
 
 .linkedin-sq {
-  color: #1177B5;
+  color: #717D98;
 }
 .linkedin {
   color: #fff;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .linkedin-icon:hover .linkedin-sq {
-  color: #fff;
-}
-
-.linkedin-icon:hover .linkedin {
   color: #1177B5;
 }
 
@@ -74,7 +70,7 @@ header {
 
 .github {
   color: #fff;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .github-icon:hover .github {
@@ -95,7 +91,7 @@ header {
 
 .angel {
   color: #cccccc;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .angel-icon:hover .angel {
@@ -106,7 +102,7 @@ header {
 }
 
 h1 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   
 }
@@ -118,10 +114,10 @@ h2 {
 .main {
   width: 95vw;
   height: 90vh;
-  min-height: 740px;
+  min-height: 800px;
   display: flex;
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .main-left {
@@ -137,7 +133,7 @@ h2 {
 .main-left-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 100%;
   padding: 0px 20px;
 }
@@ -147,7 +143,7 @@ h2 {
 }
 
 .instructions li {
-  margin: 10px 0px;
+  margin: 5px 0px;
   text-decoration: underline;
 }
 
@@ -172,14 +168,16 @@ h2 {
 .user-info {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .user-info label {
+  font-size: 12px;
   margin-bottom: 5px;
 }
 
 .user-info input {
+  font-size: 12px;
   width: 65%;
   padding: 5px;
   margin-top: 3px;
@@ -192,18 +190,19 @@ h2 {
 }
 
 .benchmark {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .benchmark > select {
   margin-bottom: 5px;
   font-family: 'Poppins', sans-serif;
+  font-size: 12px;
   padding: 3px;
   border-radius: 5px;
   border: 1px solid #cccccc;
 }
 
 .this-is-else {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .compare-img {
@@ -220,7 +219,7 @@ h2 {
 }
 
 .buttons {
-  font-size: 12px;
+  font-size: 11px;
   font-style: italic;
 }
 
@@ -230,15 +229,14 @@ h2 {
   align-items: center;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   padding: 10px;
 }
 
 button {
   cursor: pointer;
-  margin-bottom: 5px;
   border-radius: 8px;
-  padding: 10px 15px;
+  padding: 7px 10px;
   border: none;
   position: relative;
   color: white;
@@ -276,6 +274,7 @@ button:active {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding-left: 20px;
 }
 
 .main-right-container {
@@ -298,21 +297,27 @@ button:active {
   box-sizing: content-box;
 }
 
-.blocks-header {
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-  font-size: 14px;
-  color: #E8F1F2;
-}
-
-.blocks-header > div {
-  margin-bottom: 5px;
-}
-
 .blockChart {
   min-width: 5000%;
-  min-height: 940px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* min-height: 940px; */
+}
+
+.blockChart > div {
+  display: flex;
+}
+
+.selfDivs, .compareDivs {
+  min-height: 250px;
+}
+.selfDiv {
+  background: white;
+}
+
+.compareDiv {
+  background: #04E762;
 }
 
 .lineChart {
@@ -322,7 +327,6 @@ button:active {
 
 .errors {
   color: red;
-  font-size: 16px;
   height: 40px;
 }
 

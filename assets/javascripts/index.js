@@ -6,18 +6,22 @@ const width = 2000;
 const height = 550;
 const offset = 20;
 const groupSpacing = 0;
-const cellSpacing = 1;
-const cellSize = 8;
+const cellSpacing = 0;
+const cellSize = 1;
 const updateDuration = 125;
 const updateDelay = updateDuration / 250;
+const numericKeys = "0123456789.";
+
 
 const netWorth = [
+  { "name": "Select from one of the below", "val": 0, "img": null, "disabled": true },
   { "name": "iPhone Pro", "val": 1000, "img":"./assets/images/iphone.jpg" },
   { "name": "Toyota Camry", "val": 24425, "img":"./assets/images/camry.jpeg" },
   { "name": "Ferrari 458", "val": 250000, "img":"./assets/images/458.jpg" },
   { "name": "Median Bay Area Home", "val": 928000, "img":"./assets/images/home.jpg" },
   { "name": "Median Beverly Hills Mansion", "val": 3540000, "img":"./assets/images/mansion.jpg" },
   { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
+  { "name": "Mark Cuban", "val": 4300000000, "img": "./assets/images/cuban.jpeg"},
   { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
 // Select drop-down
@@ -32,12 +36,36 @@ const options = selection.selectAll("option")
 options.text( d => {
   return d.name;
 })
-  .attr("value", d => {
-    return d.name;
+  .attr("disabled", d => {
+    return d.disabled;
   })
+  // .attr("value", d => {
+  //   return d.name;
+  // })
 
-savings.addEventListener("change", e => setYears(e));
-contributions.addEventListener("change", e => setYears(e));
+// savings.addEventListener("keypress", e => {
+//   if (e.charCode === 0) {
+//     return;
+//   }
+
+//   if (-1 == numericKeys.indexOf(e.key)) {
+//     e.preventDefault();
+//     return;
+//   }
+// });
+
+savings.addEventListener("blur", e => {
+  setYears(e);
+  // let newNum = Number(e.target.value).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // e.target.value = newNum;
+});
+
+  
+
+contributions.addEventListener("change", e => {
+  setYears(e);
+});
+
 growth.addEventListener("change", e => setYears(e));
 
 document
@@ -80,17 +108,13 @@ const visualize = e => {
   setYears(e);
   document.getElementsByClassName("blocks")[0].scrollLeft = 0;
   document.getElementsByClassName("blocks")[0].scrollTop = 0;
-  let baseline = document.getElementsByClassName("user-savings")[0].value;
+  let baseline = parseFloat(document.getElementsByClassName("user-savings")[0].value);
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   if (!baseline) {
     errors.innerText = "In order to visualize disparity, please enter your savings.";
     savings.style.border="1px solid red";
-  } else if ((compare / baseline) > 40000) {
-    if (window.confirm("It seems like there is a vast disparity, which will cause an usually long load time. Confirm you still wish to continue.")) {
-      update(compare / baseline);
-    } else return;
   } else {
-    update(compare / baseline);
+    update(baseline);
   }
 }
 
@@ -100,10 +124,12 @@ document.getElementsByClassName("grow-button")[0]
 
 // Formulas
 const nper = (rate, cmpd, pmt, pv, fv) => {
+  debugger
   fv = parseFloat(fv);
   pmt = pmt === "" ? 0 : parseFloat(pmt);
   pv = pv === "" ? 0 : parseFloat(pv);
   cmpd = parseFloat(cmpd);
+  debugger
 
   let yrs;
   rate = eval(rate / (cmpd * 100));
@@ -134,7 +160,8 @@ const setYears = (e) => {
   let growth = document.getElementsByClassName("user-growth")[0].value;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`approximately ${years} years`;
+  document.getElementsByClassName("year")[0].textContent = years === "FOREVER" ? "a long time" : years <= 0 ? new Date().getFullYear() : `Year ${new Date().getFullYear() + Math.ceil(years)}`
+  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`${years} years`;
   return years;
 };
 
@@ -143,53 +170,117 @@ const removeCharts = () => {
   savings.style.border = "1px solid #cccccc";
   contributions.style.border = "1px solid #cccccc";
   growth.style.border = "1px solid #cccccc";
+  document.getElementsByClassName("blocks")[0].innerHTML = "";
   d3.select(".blockChart").remove();
   d3.select(".lineChart").remove();
 }
 
+const generateDiv = (size, str) => {
+  // 1000
+  const resultDiv = document.createElement("div");
+  size = Math.max(1, Math.ceil(size / 1000));
+
+  if (Math.sqrt(size) < 250) {
+    let div = document.createElement("div");
+    let square = Math.floor(Math.sqrt(size));
+    // debugger
+    div.style.height = `${square}px`;
+    div.style.width = `${square}px`;
+    div.className = str === "self" ? "selfDiv" : "compareDiv";
+    resultDiv.appendChild(div);
+
+    let newDiv = document.createElement("div");
+    newDiv.style.height = `${size - square ** 2}px`;
+    newDiv.style.width = "1px";
+    newDiv.className = str === "self" ? "selfDiv" : "compareDiv";
+    // debugger
+    resultDiv.appendChild(newDiv);
+    // debugger
+
+  } else {
+    while ( size >= 1 ) {
+      let div = document.createElement("div");
+      if ( size >= 250 ) {
+        div.style.height = "250px";
+        div.style.width = `${Math.floor(size / 250)}px`;
+        size = size % 250;
+      } else {
+        div.style.height = `${size}px`;
+        div.style.width = "1px";
+        size = size / 250;
+      }
+      div.className = str === "self" ? "selfDiv" : "compareDiv";
+      resultDiv.appendChild(div);
+    }
+  }
+  return resultDiv;
+}
+
 const update = (size) => {
   removeCharts();
-  const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
+  // Div Element
+  const blockChart = document.createElement("div");
+  blockChart.className = "blockChart";
 
-  let block = svg
-    .append("g")
-    .attr("class", "cells")
-    .attr("transform", "translate(" + offset + "," + offset + ")")
-    .selectAll("rect");
+  const selfHeader = document.createElement("div");
+  selfHeader.className = "selfHeader";
+  selfHeader.innerText = "Self Header";
+  let self = parseFloat(document.getElementsByClassName("user-savings")[0].value);
+  const selfDiv = generateDiv(self, "self");
+  selfDiv.className = "selfDivs";
+  // debugger
 
-  block = block.data(d3.range(size));
+  const compareHeader = document.createElement("div");
+  compareHeader.className = "compareHeader";
+  compareHeader.innerText = "Compare Header";
+  let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+  const compareDiv = generateDiv(compare, "compare");
+  compareDiv.className = "compareDivs";
 
-  block
-    .enter()
-    .append("rect")
-    .attr("width", 0)
-    .attr("height", cellSize)
-    .attr("x", (i) => {
-      const x0 = Math.floor(i / 1000);
-      // const x0 = Math.floor(i / 500);
-      const x1 = Math.floor((i % 100) / 10);
-      // const x1 = Math.floor((i % 50) / 10);
-      const xblock =
-        groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
-      // const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 5);
-      return xblock;
-    })
-    .attr("y", (i) => {
-      const y0 = Math.floor(i / 100) % 10;
-      // const y0 = Math.floor(i / 50) % 10;
-      const y1 = Math.floor(i % 10);
-      // const y1 = Math.floor(i % 5);
-      const yblock =
-        groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-      // const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-      return yblock;
-    })
-    .transition()
-    .delay(function (d, i) {
-      return i * updateDelay;
-    })
-    .duration(updateDuration)
-    .attr("width", cellSize);
+  document.getElementsByClassName("blocks")[0].appendChild(blockChart);
+  blockChart.appendChild(selfHeader);
+  blockChart.appendChild(selfDiv);
+  blockChart.appendChild(compareHeader);
+  blockChart.appendChild(compareDiv);
+
+  
+  
+
+
+  // Block Chart
+  // const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
+
+  // let block = svg
+  //   .append("g")
+  //   .attr("class", "cells")
+  //   .attr("transform", "translate(" + offset + "," + offset + ")")
+  //   .selectAll("rect");
+
+  // block = block.data(d3.range(size));
+
+  // block
+  //   .enter()
+  //   .append("rect")
+  //   .attr("width", 0)
+  //   .attr("height", cellSize)
+  //   .attr("x", (i) => {
+  //     const x0 = Math.floor(i / 1000);
+  //     const x1 = Math.floor((i % 100) / 10);
+  //     const xblock = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
+  //     return xblock;
+  //   })
+  //   .attr("y", (i) => {
+  //     const y0 = Math.floor(i / 100) % 10;
+  //     const y1 = Math.floor(i % 10);
+  //     const yblock = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
+  //     return yblock;
+  //   })
+  //   .transition()
+  //   .delay(function (d, i) {
+  //     return i * updateDelay;
+  //   })
+  //   .duration(updateDuration)
+  //   .attr("width", cellSize);
 };
 
 const drawChart = (e) => {
@@ -377,6 +468,36 @@ const drawChart = (e) => {
     .attr("x1", lineWidth)
     .attr("x2", lineWidth);
 
+  // focus
+  //   .append("line")
+  //   .attr("class", "benchXLine")
+  //   .style("stroke", "#92DCE5")
+  //   .style("stroke-width", "1.5")
+  //   .style("stroke-dasharray", "5")
+  //   .style("opacity", 0.5)
+  //   .attr("y1", 0)
+  //   .attr("y2", lineHeight);
+
+  // focus
+  //   .append("line")
+  //   .attr("class", "benchYLine")
+  //   .style("stroke", "#92DCE5")
+  //   .style("stroke-width", "1.5")
+  //   .style("stroke-dasharray", "5")
+  //   .style("opacity", 0.5)
+  //   .attr("x1", lineWidth)
+  //   .attr("x2", lineWidth);
+
+  // focus
+  //   .select(".benchXLine")
+  //   .attr("transform", "translate(100,200)")
+  //   .attr("y2", lineHeight + margin.top - 200)
+
+  // focus
+  //   .select(".benchYLine")
+  //   .attr("transform", "translate(" + widthAdjust + ", " + yAdjust + ")")
+  //   .attr("x2", lineWidth + x(d.year));
+
   focus
     .append("text")
     .attr("class", "y1")
@@ -413,7 +534,7 @@ const createData = (pv, pmt, rate, yrs) => {
   let currYear = new Date().getFullYear();
   let currVal = parseFloat(pv);
   const data = [];
-  for (let i = 0; i < yrs + 10; i++) {
+  for (let i = 0; i < yrs + 5; i++) {
     data.push({year: currYear, value: +currVal.toFixed(2)});
     currYear += 1;
     currVal = (currVal + pmt) * rate;
