@@ -184,7 +184,7 @@ const setYears = (e) => {
   const forever = "It seems like it will take a long time to reach your goal. Double check that your inputs are correct."
   const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years)}.`
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
-  document.getElementsByClassName("tvm")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
+  document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
   // document.getElementsByClassName("year")[0].textContent = years === "FOREVER" ? "a long time" : years <= 0 ? new Date().getFullYear() : `Year ${new Date().getFullYear() + Math.ceil(years)}`
   // document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`${years} years`;
   return years;
@@ -249,25 +249,35 @@ const update = (size) => {
   // Div Element
   const blockChart = document.createElement("div");
   blockChart.className = "blockChart";
+  const header = document.createElement("div");
+  header.className = "blockHeader";
+  const header1 = document.createElement("div");
+  header1.innerText = "Below, you will see two sections:"
+  const header2 = document.createElement("div");
+  header2.innerText = 
+    `In blue, is a pixel representation of your current savings. If your savings is small, you may need to look closer, or try increasing your savings. 
+    In orange, is a pixel representation of your selected benchmark.`;
+  header.appendChild(header1);
+  header.appendChild(header2);
+  blockChart.appendChild(header);
 
-  const selfHeader = document.createElement("div");
-  selfHeader.className = "selfHeader";
-  selfHeader.innerText = "Self Header";
+  // const selfHeader = document.createElement("div");
+  // selfHeader.className = "selfHeader";
   let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
   const selfDiv = generateDiv(baseSavings, "self");
   selfDiv.className = "selfDivs";
 
-  const compareHeader = document.createElement("div");
-  compareHeader.className = "compareHeader";
-  compareHeader.innerText = "Compare Header";
+  // const compareHeader = document.createElement("div");
+  // compareHeader.className = "compareHeader";
+  // compareHeader.innerText = "Compare Header";
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   const compareDiv = generateDiv(compare, "compare");
   compareDiv.className = "compareDivs";
 
   document.getElementsByClassName("blocks")[0].appendChild(blockChart);
-  blockChart.appendChild(selfHeader);
+  // blockChart.appendChild(selfHeader);
   blockChart.appendChild(selfDiv);
-  blockChart.appendChild(compareHeader);
+  // blockChart.appendChild(compareHeader);
   blockChart.appendChild(compareDiv);
 
   // Block Chart

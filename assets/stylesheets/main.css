@@ -205,9 +205,6 @@ h2 {
   -o-transition: all 0.5s ease-in-out;
 }
 
-.this-is-else {
-}
-
 .compare-img {
   margin-top: 5px;
   min-width: 270px;
@@ -274,6 +271,13 @@ button:active {
   min-height: 40px;
 }
 
+.tvm > div:first-child {
+  text-decoration: underline;
+  margin-bottom: 3px;
+}
+
+
+
 .main-right {
   width: 100%;
   display: flex;
@@ -304,11 +308,11 @@ button:active {
 }
 
 .blockChart {
-  min-width: 50000%;
+  /* min-width: 50000%; */
+  min-width: fit-content;
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* min-height: 940px; */
 }
 
 .blockChart > div {
@@ -317,13 +321,26 @@ button:active {
 
 .selfDivs, .compareDivs {
   min-height: 250px;
+  margin-top: 10px;
 }
+
+.blockHeader {
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.blockHeader > div:first-child {
+  text-decoration: underline;
+  margin-bottom: 3px;
+}
+
 .selfDiv {
-  background: white;
+  background: #03A9F4;
 }
 
 .compareDiv {
-  background: #04E762;
+  background: #FC7233;
 }
 
 .lineChart {
