@@ -285,6 +285,7 @@ button:active {
   justify-content: space-between;
   align-items: center;
   padding-left: 20px;
+  overflow: scroll;
 }
 
 .main-right-container {
@@ -299,17 +300,18 @@ button:active {
 
 .blocks {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  /* flex-direction: column;
+  justify-content: flex-start; */
   width: 100%;
   min-height: 100%;
-  overflow: auto;
-  box-sizing: content-box;
+  overflow: scroll;
+  /* box-sizing: content-box; */
 }
 
 .blockChart {
   /* min-width: 50000%; */
-  min-width: fit-content;
+  width: fit-content;
+  /* width: fit-content(50000%); */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -321,7 +323,7 @@ button:active {
 
 .selfDivs, .compareDivs {
   min-height: 250px;
-  margin-top: 10px;
+  margin: 10px 10px 0px 0px;
 }
 
 .blockHeader {
@@ -381,7 +383,7 @@ button:active {
 }
 .axis text {
   fill: #E5ECF4;
-  font-size: 1.5em;
+  font-size: 1.25em;
 }
 
 .grid line {

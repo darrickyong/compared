@@ -165,7 +165,7 @@ const nper = (rate, cmpd, pmt, pv, fv) => {
 
 const conv_number = (expr) => {
   if (expr === Infinity) return "FOREVER";
-  return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2});
+  return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2, maximumFractionDigits: 2});
 };
 
 // const compareVal = d3
