@@ -199,7 +199,6 @@ const removeCharts = () => {
 const generateDiv = (size, str) => {
   // 1000
   const resultDiv = document.createElement("div");
-  debugger
   size = Math.max(1, Math.ceil(size / 1000));
 
   if (Math.sqrt(size) < 250) {
@@ -219,7 +218,6 @@ const generateDiv = (size, str) => {
       resultDiv.appendChild(newDiv);
       size = size - square;
     }
-    // debugger
 
   } else {
     while ( size >= 1 ) {
@@ -250,10 +248,8 @@ const update = (size) => {
   selfHeader.className = "selfHeader";
   selfHeader.innerText = "Self Header";
   let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
-  debugger
   const selfDiv = generateDiv(baseSavings, "self");
   selfDiv.className = "selfDivs";
-  // debugger
 
   const compareHeader = document.createElement("div");
   compareHeader.className = "compareHeader";
@@ -307,7 +303,7 @@ const update = (size) => {
 const drawChart = (e) => {
   errors.innerText = "";
   removeCharts();
-  const baseSavings = document.getElementsByClassName("user-savings")[0].value;
+  const baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
   const compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
