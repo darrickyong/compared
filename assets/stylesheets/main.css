@@ -206,10 +206,12 @@ h2 {
 }
 
 .this-is-else {
-  margin-top: 5px;
 }
 
 .compare-img {
+  margin-top: 5px;
+  min-width: 270px;
+  min-height: 180px;
   width: 270px;
   height: 180px;
   border-radius: 10px;

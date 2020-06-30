@@ -88,8 +88,10 @@ contributions.addEventListener("focus", e => {
 document
   .getElementsByClassName("user-selection")[0]
   .addEventListener("change", (e) => {
-    compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
-    compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
+    document.getElementsByClassName("value")[0].innerText = `is valued at $${conv_number(netWorth[e.target.selectedIndex].val)}.`
+    document.getElementsByClassName("compare-img")[0].src = `${netWorth[e.target.selectedIndex].img}`
+    // compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
+    // compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
     // setYears(e);
   }); 
 
@@ -103,17 +105,17 @@ document
 //   .attr("width", cellSize)
 //   .attr("height", cellSize)
 
-const compareImg = d3
-  .select(".this-is-else")
-  .append("svg")
-  .attr("class", "compare-img")
-  .append("image")
-  .attr("width", "270")
-  .attr("height", "180px")
-  .attr(
-    "xlink:href",
-    netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img
-  );
+// const compareImg = d3
+//   .select(".this-is-else")
+//   .append("svg")
+//   .attr("class", "compare-img")
+//   .append("image")
+//   .attr("width", "270")
+//   .attr("height", "180px")
+//   .attr(
+//     "xlink:href",
+//     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img
+//   );
 
 // Vizualize
 document
@@ -127,7 +129,7 @@ const visualize = e => {
   let baseline = parseFloat(document.getElementsByClassName("user-savings")[0].value);
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   if (!baseline) {
-    errors.innerText = "Please enter your savings, in order to visualize disparity.";
+    errors.innerText = "Please enter your current savings.";
     savings.style.border = "1px solid red";
   } else if (!compare) {
     errors.innerText = "Please select a benchmark.";
@@ -166,11 +168,11 @@ const conv_number = (expr) => {
   return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2});
 };
 
-const compareVal = d3
-  .select("#compare-val")
-  .text(
-    conv_number(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val)
-  );
+// const compareVal = d3
+//   .select("#compare-val")
+//   .text(
+//     conv_number(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val)
+//   );
 
 const setYears = (e) => {
   e.preventDefault();
@@ -179,8 +181,12 @@ const setYears = (e) => {
   let growth = document.getElementsByClassName("user-growth")[0].value;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  document.getElementsByClassName("year")[0].textContent = years === "FOREVER" ? "a long time" : years <= 0 ? new Date().getFullYear() : `Year ${new Date().getFullYear() + Math.ceil(years)}`
-  document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`${years} years`;
+  const forever = "It seems like it will take a long time to reach your goal. Double check that your inputs are correct."
+  const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years)}.`
+  const already = "Congratuations are in order! It seems like you've reached your goal. ";
+  document.getElementsByClassName("tvm")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
+  // document.getElementsByClassName("year")[0].textContent = years === "FOREVER" ? "a long time" : years <= 0 ? new Date().getFullYear() : `Year ${new Date().getFullYear() + Math.ceil(years)}`
+  // document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`${years} years`;
   return years;
 };
 
