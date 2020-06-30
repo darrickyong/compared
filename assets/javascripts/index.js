@@ -2,6 +2,7 @@ const errors = document.getElementsByClassName("errors")[0];
 const savings = document.getElementsByClassName("user-savings")[0];
 const contributions = document.getElementsByClassName("user-contributions")[0];
 const growth = document.getElementsByClassName("user-growth")[0];
+const selection = document.getElementsByClassName("user-selection")[0];
 const width = 2000;
 const height = 550;
 const offset = 20;
@@ -25,10 +26,10 @@ const netWorth = [
   { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
 // Select drop-down
-const selection = d3
+const d3Selection = d3
   .select(".user-selection")
 
-const options = selection.selectAll("option")
+const options = d3Selection.selectAll("option")
   .data(netWorth)
   .enter()
   .append("option")
@@ -39,52 +40,68 @@ options.text( d => {
   .attr("disabled", d => {
     return d.disabled;
   })
-  // .attr("value", d => {
-  //   return d.name;
-  // })
 
-// savings.addEventListener("keypress", e => {
-//   if (e.charCode === 0) {
-//     return;
-//   }
+savings.addEventListener("keypress", e => {
+  if (e.charCode === 0) {
+    return;
+  }
 
-//   if (-1 == numericKeys.indexOf(e.key)) {
-//     e.preventDefault();
-//     return;
-//   }
-// });
+  if (-1 == numericKeys.indexOf(e.key)) {
+    e.preventDefault();
+    return;
+  }
+});
 
 savings.addEventListener("blur", e => {
-  setYears(e);
-  // let newNum = Number(e.target.value).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  // e.target.value = newNum;
+  if (e.target.value === "") return; 
+  let minNum = Math.max(1000, Number(e.target.value));
+  let newNum = minNum.toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  e.target.value = newNum;
 });
 
-  
-
-contributions.addEventListener("change", e => {
-  setYears(e);
+savings.addEventListener("focus", e => {
+  if (e.target.value === "") return;
+  e.target.value = e.target.value.replace(/[,.]/g, "") / 100;
 });
 
-growth.addEventListener("change", e => setYears(e));
+contributions.addEventListener("keypress", e => {
+  if (e.charCode === 0) {
+    return;
+  }
+
+  if (-1 == numericKeys.indexOf(e.key)) {
+    e.preventDefault();
+    return;
+  }
+});
+
+contributions.addEventListener("blur", e => {
+  if (e.target.value === "") return;
+  e.target.value = Number(e.target.value).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+});
+
+contributions.addEventListener("focus", e => {
+  if (e.target.value === "") return;
+  e.target.value = e.target.value.replace(/[,.]/g, "") / 100;
+});
 
 document
   .getElementsByClassName("user-selection")[0]
   .addEventListener("change", (e) => {
-    setYears(e);
     compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
     compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
+    // setYears(e);
   }); 
 
 // Comparisons
-const you = d3
-  .select(".this-is-you")
-  .append("svg")
-  .attr("width", cellSize)
-  .attr("height", cellSize)
-  .append("rect")
-  .attr("width", cellSize)
-  .attr("height", cellSize)
+// const you = d3
+//   .select(".this-is-you")
+//   .append("svg")
+//   .attr("width", cellSize)
+//   .attr("height", cellSize)
+//   .append("rect")
+//   .attr("width", cellSize)
+//   .attr("height", cellSize)
 
 const compareImg = d3
   .select(".this-is-else")
@@ -105,15 +122,18 @@ document
 
 const visualize = e => {
   removeCharts();
-  setYears(e);
   document.getElementsByClassName("blocks")[0].scrollLeft = 0;
   document.getElementsByClassName("blocks")[0].scrollTop = 0;
   let baseline = parseFloat(document.getElementsByClassName("user-savings")[0].value);
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   if (!baseline) {
-    errors.innerText = "In order to visualize disparity, please enter your savings.";
-    savings.style.border="1px solid red";
+    errors.innerText = "Please enter your savings, in order to visualize disparity.";
+    savings.style.border = "1px solid red";
+  } else if (!compare) {
+    errors.innerText = "Please select a benchmark.";
+    selection.style.border = "1px solid red";
   } else {
+    setYears(e);
     update(baseline);
   }
 }
@@ -124,12 +144,11 @@ document.getElementsByClassName("grow-button")[0]
 
 // Formulas
 const nper = (rate, cmpd, pmt, pv, fv) => {
-  debugger
   fv = parseFloat(fv);
+  if (!fv) return 0;
   pmt = pmt === "" ? 0 : parseFloat(pmt);
   pv = pv === "" ? 0 : parseFloat(pv);
   cmpd = parseFloat(cmpd);
-  debugger
 
   let yrs;
   rate = eval(rate / (cmpd * 100));
@@ -155,7 +174,7 @@ const compareVal = d3
 
 const setYears = (e) => {
   e.preventDefault();
-  let baseSavings = document.getElementsByClassName("user-savings")[0].value;
+  let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
   let baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   let growth = document.getElementsByClassName("user-growth")[0].value;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
@@ -170,6 +189,8 @@ const removeCharts = () => {
   savings.style.border = "1px solid #cccccc";
   contributions.style.border = "1px solid #cccccc";
   growth.style.border = "1px solid #cccccc";
+  selection.style.border = "1px solid #cccccc";
+
   document.getElementsByClassName("blocks")[0].innerHTML = "";
   d3.select(".blockChart").remove();
   d3.select(".lineChart").remove();
@@ -178,23 +199,26 @@ const removeCharts = () => {
 const generateDiv = (size, str) => {
   // 1000
   const resultDiv = document.createElement("div");
+  debugger
   size = Math.max(1, Math.ceil(size / 1000));
 
   if (Math.sqrt(size) < 250) {
     let div = document.createElement("div");
     let square = Math.floor(Math.sqrt(size));
-    // debugger
     div.style.height = `${square}px`;
     div.style.width = `${square}px`;
     div.className = str === "self" ? "selfDiv" : "compareDiv";
     resultDiv.appendChild(div);
 
-    let newDiv = document.createElement("div");
-    newDiv.style.height = `${size - square ** 2}px`;
-    newDiv.style.width = "1px";
-    newDiv.className = str === "self" ? "selfDiv" : "compareDiv";
-    // debugger
-    resultDiv.appendChild(newDiv);
+    size = size - square ** 2;
+    while (size > 0) {
+      let newDiv = document.createElement("div");
+      newDiv.style.height = `${Math.min(square, size)}px`;
+      newDiv.style.width = "1px";
+      newDiv.className = str === "self" ? "selfDiv" : "compareDiv";
+      resultDiv.appendChild(newDiv);
+      size = size - square;
+    }
     // debugger
 
   } else {
@@ -225,8 +249,9 @@ const update = (size) => {
   const selfHeader = document.createElement("div");
   selfHeader.className = "selfHeader";
   selfHeader.innerText = "Self Header";
-  let self = parseFloat(document.getElementsByClassName("user-savings")[0].value);
-  const selfDiv = generateDiv(self, "self");
+  let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
+  debugger
+  const selfDiv = generateDiv(baseSavings, "self");
   selfDiv.className = "selfDivs";
   // debugger
 
@@ -242,10 +267,6 @@ const update = (size) => {
   blockChart.appendChild(selfDiv);
   blockChart.appendChild(compareHeader);
   blockChart.appendChild(compareDiv);
-
-  
-  
-
 
   // Block Chart
   // const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
@@ -286,11 +307,12 @@ const update = (size) => {
 const drawChart = (e) => {
   errors.innerText = "";
   removeCharts();
-  
   const baseSavings = document.getElementsByClassName("user-savings")[0].value;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
   const growth = document.getElementsByClassName("user-growth")[0].value;
-
+  const compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+  
+  
   if (parseFloat(growth) && (!parseFloat(baseSavings) && !parseFloat(baseContributions))) {
     errors.innerText = "Please enter your current savings or an amount to save annually."
     savings.style.border = "1px solid red";
@@ -300,6 +322,10 @@ const drawChart = (e) => {
     errors.innerText = "Please enter both your current savings and an amount to save annually."
     savings.style.border = "1px solid red";
     contributions.style.border = "1px solid red";
+    return;
+  } else if (!compare) {
+    errors.innerText = "Please select a benchmark.";
+    selection.style.border = "1px solid red";
     return;
   }
   

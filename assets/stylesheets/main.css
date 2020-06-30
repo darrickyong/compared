@@ -199,6 +199,10 @@ h2 {
   padding: 3px;
   border-radius: 5px;
   border: 1px solid #cccccc;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
 }
 
 .this-is-else {
@@ -264,8 +268,8 @@ button:active {
   box-shadow: 2px 2px #00CECB;
 }
 
-.years {
-  
+.tvm {
+  min-height: 40px;
 }
 
 .main-right {
