@@ -85,6 +85,27 @@ contributions.addEventListener("focus", e => {
   e.target.value = e.target.value.replace(/[,.]/g, "") / 100;
 });
 
+growth.addEventListener("keypress", e => {
+  if (e.charCode === 0) {
+    return;
+  }
+
+  if (-1 == numericKeys.indexOf(e.key)) {
+    e.preventDefault();
+    return;
+  }
+});
+
+growth.addEventListener("blur", e => {
+  if (e.target.value === "") return;
+  e.target.value = Number(e.target.value).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+});
+
+growth.addEventListener("focus", e => {
+  if (e.target.value === "") return;
+  e.target.value = e.target.value.replace(/[,.]/g, "") / 100;
+});
+
 document
   .getElementsByClassName("user-selection")[0]
   .addEventListener("change", (e) => {
@@ -177,8 +198,8 @@ const conv_number = (expr) => {
 const setYears = (e) => {
   e.preventDefault();
   let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
-  let baseContributions = document.getElementsByClassName("user-contributions")[0].value;
-  let growth = document.getElementsByClassName("user-growth")[0].value;
+  let baseContributions = document.getElementsByClassName("user-contributions")[0].value.replace(/[,.]/g, "") / 100;
+  let growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
   const forever = "It seems like it will take a long time to reach your goal. Double check that your inputs are correct."
@@ -320,8 +341,8 @@ const drawChart = (e) => {
   errors.innerText = "";
   removeCharts();
   const baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
-  const baseContributions = document.getElementsByClassName("user-contributions")[0].value;
-  const growth = document.getElementsByClassName("user-growth")[0].value;
+  const baseContributions = document.getElementsByClassName("user-contributions")[0].value.replace(/[,.]/g, "") / 100;
+  const growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   const compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   
   

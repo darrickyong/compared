@@ -276,7 +276,9 @@ button:active {
   margin-bottom: 3px;
 }
 
-
+.tvm-notes {
+  margin-left: 5px;
+}
 
 .main-right {
   width: 100%;
