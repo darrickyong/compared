@@ -176,7 +176,7 @@ const setYears = (e) => {
   const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
   document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
-  return years;
+  return years.replace(/[,.]/g, "")/100;
 };
 
 const removeCharts = () => {
