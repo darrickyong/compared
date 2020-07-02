@@ -176,7 +176,7 @@ const setYears = (e) => {
   const forever = "It seems like it will take a long time to reach your goal. Double check that you are either saving something every year or that your money is growing."
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
   const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`
-  document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years === "-∞" ? already : years <= 0 ? already : normal; 
+  document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years > 0 ? normal : already; 
   return years.replace(/[,.]/g, "")/100;
 };
 
