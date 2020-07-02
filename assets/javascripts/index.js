@@ -98,6 +98,7 @@ growth.addEventListener("keypress", e => {
 
 growth.addEventListener("blur", e => {
   if (e.target.value === "") return;
+  // let minGrowth = Math.max(1,)
   e.target.value = Number(e.target.value).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 });
 
@@ -111,32 +112,7 @@ document
   .addEventListener("change", (e) => {
     document.getElementsByClassName("value")[0].innerText = `is valued at $${conv_number(netWorth[e.target.selectedIndex].val)}.`
     document.getElementsByClassName("compare-img")[0].src = `${netWorth[e.target.selectedIndex].img}`
-    // compareImg.attr("xlink:href", netWorth[e.target.selectedIndex].img);
-    // compareVal.text(`${conv_number(netWorth[e.target.selectedIndex].val)}`);
-    // setYears(e);
   }); 
-
-// Comparisons
-// const you = d3
-//   .select(".this-is-you")
-//   .append("svg")
-//   .attr("width", cellSize)
-//   .attr("height", cellSize)
-//   .append("rect")
-//   .attr("width", cellSize)
-//   .attr("height", cellSize)
-
-// const compareImg = d3
-//   .select(".this-is-else")
-//   .append("svg")
-//   .attr("class", "compare-img")
-//   .append("image")
-//   .attr("width", "270")
-//   .attr("height", "180px")
-//   .attr(
-//     "xlink:href",
-//     netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].img
-//   );
 
 // Vizualize
 document
@@ -189,12 +165,6 @@ const conv_number = (expr) => {
   return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2, maximumFractionDigits: 2});
 };
 
-// const compareVal = d3
-//   .select("#compare-val")
-//   .text(
-//     conv_number(netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val)
-//   );
-
 const setYears = (e) => {
   e.preventDefault();
   let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
@@ -203,11 +173,9 @@ const setYears = (e) => {
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
   const forever = "It seems like it will take a long time to reach your goal. Double check that your inputs are correct."
-  const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years)}.`
+  const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
   document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
-  // document.getElementsByClassName("year")[0].textContent = years === "FOREVER" ? "a long time" : years <= 0 ? new Date().getFullYear() : `Year ${new Date().getFullYear() + Math.ceil(years)}`
-  // document.getElementsByClassName("years")[0].textContent = years === "FOREVER" ? "FOREVER" : years <= 0 ? `... Congrats! You have already exceeded the benchmark`:`${years} years`;
   return years;
 };
 
