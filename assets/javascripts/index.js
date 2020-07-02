@@ -144,7 +144,7 @@ document.getElementsByClassName("grow-button")[0]
 // Formulas
 const nper = (rate, cmpd, pmt, pv, fv) => {
   fv = parseFloat(fv);
-  if (!fv) return 0;
+  // if (!fv) return 0;
   pmt = pmt === "" ? 0 : parseFloat(pmt);
   pv = pv === "" ? 0 : parseFloat(pv);
   cmpd = parseFloat(cmpd);
@@ -161,7 +161,8 @@ const nper = (rate, cmpd, pmt, pv, fv) => {
 };
 
 const conv_number = (expr) => {
-  if (expr === Infinity) return "FOREVER";
+  if (expr === Infinity) return "FOREVER"; 
+  // if (expr === -Infinity) return -1;
   return (parseFloat(expr)).toLocaleString("en", {minimumFractionDigits: 2, maximumFractionDigits: 2});
 };
 
@@ -172,10 +173,10 @@ const setYears = (e) => {
   let growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
-  const forever = "It seems like it will take a long time to reach your goal. Double check that your inputs are correct."
-  const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`
+  const forever = "It seems like it will take a long time to reach your goal. Double check that you are either saving something every year or that your money is growing."
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
-  document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years <= 0 ? already : normal; 
+  const normal = `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`
+  document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years === "-∞" ? already : years <= 0 ? already : normal; 
   return years.replace(/[,.]/g, "")/100;
 };
 
