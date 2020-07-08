@@ -287,7 +287,8 @@ button:active {
   justify-content: space-between;
   align-items: center;
   padding-left: 20px;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 .main-right-container {
@@ -306,7 +307,8 @@ button:active {
   justify-content: flex-start; */
   width: 100%;
   min-height: 100%;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
   /* box-sizing: content-box; */
 }
 
