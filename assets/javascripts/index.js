@@ -23,7 +23,7 @@ const netWorth = [
   { "name": "Median Beverly Hills Mansion", "val": 3540000, "img":"./assets/images/mansion.jpg" },
   { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
   { "name": "Mark Cuban", "val": 4300000000, "img": "./assets/images/cuban.jpeg"},
-  { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
+  // { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
 ]
 // Select drop-down
 const d3Selection = d3
@@ -133,7 +133,7 @@ const visualize = e => {
     selection.style.border = "1px solid red";
   } else {
     setYears(e);
-    update(baseline);
+    update();
   }
 }
 
@@ -172,12 +172,12 @@ const setYears = (e) => {
   let baseContributions = document.getElementsByClassName("user-contributions")[0].value.replace(/[,.]/g, "") / 100;
   let growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-  let years = nper(growth, 1, baseContributions, baseSavings, -comparison);
+  let years = (nper(growth, 1, baseContributions, baseSavings, -comparison)).replace(/[,.]/g, "")/100;
   const forever = "It seems like it will take a long time to reach your goal. Double check that you are either saving something every year or that your money is growing."
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
-  const normal = years > 0 ? `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years.replace(/[,.]/g, "")/100)}.`: null;
+  const normal = years > 0 ? `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years)}.`: null;
   document.getElementsByClassName("tvm-notes")[0].textContent = years === "FOREVER" ? forever : years > 0 ? normal : already; 
-  return years > 0 ? years.replace(/[,.]/g, "")/100 : 0;
+  return years > 0 ? years : 0;
 };
 
 const removeCharts = () => {
@@ -195,7 +195,8 @@ const removeCharts = () => {
 const generateDiv = (size, str) => {
   // 1000
   const resultDiv = document.createElement("div");
-  size = Math.max(1, Math.ceil(size / 1000));
+  // size = Math.max(1, Math.ceil(size / 1000));
+  size = Math.max(1, Math.ceil(size));
 
   if (Math.sqrt(size) < 250) {
     let div = document.createElement("div");
@@ -234,7 +235,7 @@ const generateDiv = (size, str) => {
   return resultDiv;
 }
 
-const update = (size) => {
+const update = () => {
   removeCharts();
   // Div Element
   const blockChart = document.createElement("div");
@@ -242,32 +243,27 @@ const update = (size) => {
   const header = document.createElement("div");
   header.className = "blockHeader";
   const header1 = document.createElement("div");
-  header1.innerText = "Below, you will see two sections:"
+  header1.innerText = "This visualization is for comparison purposes only. To view growth, click the 'Grow My Savings' button. Below, you will see two sections:"
   const header2 = document.createElement("div");
   header2.innerText = 
-    `In blue, is a pixel representation of your current savings. If your savings is small, you may need to look closer, or try increasing your savings. 
-    In orange, is a pixel representation of your selected benchmark.`;
+    `In blue, is a pixel representation of your current savings. 
+    In orange, is a pixel representation of your selected benchmark.
+    `;
   header.appendChild(header1);
   header.appendChild(header2);
   blockChart.appendChild(header);
 
-  // const selfHeader = document.createElement("div");
-  // selfHeader.className = "selfHeader";
   let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
   const selfDiv = generateDiv(baseSavings, "self");
   selfDiv.className = "selfDivs";
 
-  // const compareHeader = document.createElement("div");
-  // compareHeader.className = "compareHeader";
-  // compareHeader.innerText = "Compare Header";
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   const compareDiv = generateDiv(compare, "compare");
   compareDiv.className = "compareDivs";
 
   document.getElementsByClassName("blocks")[0].appendChild(blockChart);
-  // blockChart.appendChild(selfHeader);
+
   blockChart.appendChild(selfDiv);
-  // blockChart.appendChild(compareHeader);
   blockChart.appendChild(compareDiv);
 
   // Block Chart
