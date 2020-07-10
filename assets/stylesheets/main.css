@@ -11,6 +11,7 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
+  width: 95vw;
 }
 
 .header-container {
@@ -18,7 +19,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 32px;
 }
 
 .logo {
