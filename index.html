@@ -65,26 +65,6 @@
                     step="0.01" 
                     placeholder="Total Savings">
                 </label>
-      
-                <label>Amount to Save Annually:
-                  <input 
-                    type="text" 
-                    class="user-contributions" 
-                    setp="0.01" 
-                    placeholder="Annual Savings">
-                </label>
-      
-                <label>Annual Interest Rate: 
-                  <span>
-                    <input 
-                      type="text"
-                      class="user-growth"
-                      step="0.01"
-                      
-                      placeholder="Growth Rate">
-                    %
-                  </span>
-                </label>
               </div>
 
             <li>Select a benchmark:</li>
@@ -99,15 +79,29 @@
             <li>Click one of the following buttons:</li>
 
               <div class="buttons">
-                <div><button class="visualize-button">Visualize</button>
-                  <br>
-                  <div>View a pixel comparison between your savings and the selected benchmark. 
+                <div>
+                  <div class="button-instructions">View a pixel comparison between your savings and the selected benchmark. 
                   </div>
+                  <button class="visualize-button">Visualize</button>
                 </div>
                 
-                <div><button class="grow-button">Grow My Savings</button>
-                  <br>
-                  <div>Graphs a time-series to show how your money grows over time. Mouse around to see how saving early has exponential growth!</div>
+                <div>
+                  <div class="button-instructions">Graph a time-series showing how savings grows exponentially over time. To do that, we'll need some additional information:
+                  </div>
+                  
+
+                  <label>Amount to Save Annually:
+                    <input type="text" class="user-contributions" setp="0.01"
+                      placeholder="Annual Savings">
+                  </label>
+
+                  <label>Annual Interest Rate:
+                    <span>
+                      <input type="text" class="user-growth" step="0.01" placeholder="Growth Rate">
+                      %
+                    </span>
+                  </label>
+                  <button class="grow-button">Grow My Savings</button>
                 </div>
 
               </div>

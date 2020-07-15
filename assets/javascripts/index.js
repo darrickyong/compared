@@ -127,10 +127,10 @@ const visualize = e => {
   let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   if (!baseline) {
     errors.innerText = "Please enter your current savings.";
-    savings.style.border = "1px solid red";
+    savings.style.border = "2px solid red";
   } else if (!compare) {
     errors.innerText = "Please select a benchmark.";
-    selection.style.border = "1px solid red";
+    selection.style.border = "2px solid red";
   } else {
     setYears(e);
     update();
@@ -195,8 +195,8 @@ const removeCharts = () => {
 const generateDiv = (size, str) => {
   // 1000
   const resultDiv = document.createElement("div");
-  // size = Math.max(1, Math.ceil(size / 1000));
-  size = Math.max(1, Math.ceil(size));
+  size = Math.max(1, Math.ceil(size / 1000));
+  // size = Math.max(1, Math.ceil(size));
 
   if (Math.sqrt(size) < 250) {
     let div = document.createElement("div");
@@ -240,31 +240,57 @@ const update = () => {
   // Div Element
   const blockChart = document.createElement("div");
   blockChart.className = "blockChart";
+  
   const header = document.createElement("div");
   header.className = "blockHeader";
-  const header1 = document.createElement("div");
-  header1.innerText = "This visualization is for comparison purposes only. To view growth, click the 'Grow My Savings' button. Below, you will see two sections:"
-  const header2 = document.createElement("div");
-  header2.innerText = 
-    `In blue, is a pixel representation of your current savings. 
-    In orange, is a pixel representation of your selected benchmark.
-    `;
-  header.appendChild(header1);
-  header.appendChild(header2);
-  blockChart.appendChild(header);
+  header.innerText = "This visualization is for comparison purposes only. To view growth, click the 'Grow My Savings' button."
 
-  let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
-  const selfDiv = generateDiv(baseSavings, "self");
-  selfDiv.className = "selfDivs";
+  const wealthRow = document.createElement("div");
+  wealthRow.className = "wealth-row";
 
-  let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-  const compareDiv = generateDiv(compare, "compare");
-  compareDiv.className = "compareDivs";
+  const scroll = document.createElement("div");
+  scroll.className = "scroll-this-way";
+  const scrollRight = document.createElement("span");
+  scrollRight.innerText = "Scroll Right"; 
+  scroll.appendChild(scrollRight);
+  const scrollInstructions = document.createElement("div");
+  scrollInstructions.className = "scroll-instructions";
+  scrollInstructions.innerText = "To scroll, use shift + mousewheel or swipe on your touchpad."; 
+  scroll.appendChild(scrollInstructions);
+  
+  
+
+  const thousand = document.createElement("div");
+  thousand.className = "one-thousand";
+
+  const ownSavings = document.createElement("div");
+  ownSavings.className = "own-savings";
+
+  const benchmark = document.createElement("div");
+  benchmark.className = "benchmark";
+
+  wealthRow.appendChild(scroll);
+  wealthRow.appendChild(thousand);
+  wealthRow.appendChild(ownSavings);
+  wealthRow.appendChild(benchmark);
 
   document.getElementsByClassName("blocks")[0].appendChild(blockChart);
+  blockChart.appendChild(header);
+  blockChart.appendChild(wealthRow);
 
-  blockChart.appendChild(selfDiv);
-  blockChart.appendChild(compareDiv);
+  // let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
+  // const selfDiv = generateDiv(baseSavings, "self");
+  // selfDiv.className = "selfDivs";
+
+  // let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
+  // const compareDiv = generateDiv(compare, "compare");
+  // compareDiv.className = "compareDivs";
+
+  // document.getElementsByClassName("blocks")[0].appendChild(blockChart);
+
+  // blockChart.appendChild(selfDiv);
+  // blockChart.appendChild(compareDiv);
+  // ---------------
 
   // Block Chart
   // const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
@@ -307,28 +333,39 @@ const drawChart = (e) => {
   removeCharts();
   const baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100 ;
   const baseContributions = document.getElementsByClassName("user-contributions")[0].value.replace(/[,.]/g, "") / 100;
-  const growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
+  const baseGrowth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   const compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   
-  
-  if (parseFloat(growth) && (!parseFloat(baseSavings) && !parseFloat(baseContributions))) {
+  if (parseFloat(baseGrowth) && (!parseFloat(baseSavings) && !parseFloat(baseContributions))) {
     errors.innerText = "Please enter your current savings or an amount to save annually."
-    savings.style.border = "1px solid red";
-    contributions.style.border = "1px solid red";
+    savings.style.border = "2px solid red";
+    contributions.style.border = "2px solid red";
     return;
-  } else if (!parseFloat(growth) && !parseFloat(baseSavings) && !parseFloat(baseContributions)) {
+  } else if (parseFloat(baseSavings) && (!parseFloat(baseGrowth) && !parseFloat(baseContributions))) {
+    errors.innerText = `Please enter at least one of the following:
+    An amount to save annually, or
+    An annual growth rate.`
+    contributions.style.border = "2px solid red";
+    growth.style.border = "2px solid red";
+    return;
+  } else if (!parseFloat(baseGrowth) && !parseFloat(baseSavings) && !parseFloat(baseContributions)) {
     errors.innerText = "Please enter both your current savings and an amount to save annually."
-    savings.style.border = "1px solid red";
-    contributions.style.border = "1px solid red";
+    savings.style.border = "2px solid red";
+    contributions.style.border = "2px solid red";
     return;
   } else if (!compare) {
     errors.innerText = "Please select a benchmark.";
-    selection.style.border = "1px solid red";
+    selection.style.border = "2px solid red";
     return;
   }
   
+  const header = document.createElement("div");
+  header.className = "blockHeader";
+  header.innerText = "The below visualization shows growth of your savings. To view a comparison, click the 'Visualize' button."
+  document.getElementsByClassName("blocks")[0].appendChild(header);
+
   const years = setYears(e);
-  const data = createData(baseSavings, baseContributions, growth, years);
+  const data = createData(baseSavings, baseContributions, baseGrowth, years);
   
   const svg = d3.select(".blocks").append("svg").attr("class", "lineChart");
   const margin = {top: 30, right: 20, bottom: 20, left: 100}

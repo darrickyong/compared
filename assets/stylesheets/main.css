@@ -11,7 +11,7 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
-  width: 95vw;
+  width: 93vw;
 }
 
 .header-container {
@@ -19,12 +19,12 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 32px;
+  padding: 10px 0px;
 }
 
 .logo {
   color: white;
-  font-size: 40px;
+  font-size: 3em;
   font-family: 'Bungee', cursive;
   background: -webkit-radial-gradient(#00CECB, #00CECB, #0C6291);
   -webkit-background-clip: text;
@@ -50,7 +50,7 @@ header {
 }
 .linkedin {
   color: #fff;
-  font-size: 30px;
+  font-size: 1.5em;
 }
 
 .linkedin-icon:hover .linkedin-sq {
@@ -71,7 +71,7 @@ header {
 
 .github {
   color: #fff;
-  font-size: 30px;
+  font-size: 1.5em;
 }
 
 .github-icon:hover .github {
@@ -92,7 +92,7 @@ header {
 
 .angel {
   color: #cccccc;
-  font-size: 30px;
+  font-size: 1.5em;
 }
 
 .angel-icon:hover .angel {
@@ -103,13 +103,13 @@ header {
 }
 
 h1 {
-  font-size: 16px;
+  font-size: 1.25em;
   font-weight: bold;
   
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 1.25em;
 }
 
 .main {
@@ -118,7 +118,7 @@ h2 {
   min-height: 800px;
   display: flex;
   font-family: 'Poppins', sans-serif;
-  font-size: 12px;
+  font-size: 0.8em;
 }
 
 .main-left {
@@ -172,13 +172,13 @@ h2 {
   margin-left: 5px;
 }
 
-.user-info label {
-  font-size: 12px;
+label {
+  font-size: 1em;
   margin-bottom: 5px;
 }
 
-.user-info input {
-  font-size: 12px;
+input {
+  font-size: 1em;
   width: 65%;
   padding: 5px;
   margin-top: 3px;
@@ -196,7 +196,7 @@ h2 {
 .benchmark > select {
   margin-bottom: 5px;
   font-family: 'Poppins', sans-serif;
-  font-size: 12px;
+  font-size: 1em;
   padding: 3px;
   border-radius: 5px;
   border: 1px solid #cccccc;
@@ -208,10 +208,11 @@ h2 {
 
 .compare-img {
   margin-top: 5px;
+  box-sizing: border-box;
   min-width: 270px;
   min-height: 180px;
-  width: 270px;
-  height: 180px;
+  max-width: 270px;
+  max-height: 180px;
   border-radius: 10px;
   border: none;
   transition: 0.8s;
@@ -223,8 +224,7 @@ h2 {
 }
 
 .buttons {
-  font-size: 11px;
-  font-style: italic;
+  /* font-size: 1em; */
 }
 
 .buttons > div {
@@ -232,6 +232,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   border: 1px solid #cccccc;
+  font-size: 1em;
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 10px;
@@ -266,6 +267,12 @@ button:active {
 .grow-button {
   background: #0C6291;
   box-shadow: 2px 2px #00CECB;
+}
+
+.button-instructions {
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 5px;
 }
 
 .tvm {
@@ -304,8 +311,8 @@ button:active {
 
 .blocks {
   display: flex;
-  /* flex-direction: column;
-  justify-content: flex-start; */
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
   min-height: 100%;
   overflow-y: hidden;
@@ -335,11 +342,12 @@ button:active {
   color: white;
   display: flex;
   flex-direction: column;
+  font-size: 1em;
 }
 
 .blockHeader > div:first-child {
   text-decoration: underline;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
 }
 
 .selfDiv {
@@ -357,7 +365,8 @@ button:active {
 
 .errors {
   color: red;
-  height: 40px;
+  min-height: 50px;
+  line-height: 1.25em;
 }
 
 .graphline {
@@ -402,6 +411,44 @@ button:active {
 }
 
 .y1, .y2, .y3, .y4 {
-  font-size: 14px;
+  font-size: 1em;
   fill: #04E762;
+}
+
+.wealth-row {
+  height: 100%;
+}
+
+.scroll-this-way {
+  background-image: url(../images/right.svg);
+  background-repeat: no-repeat;
+  background-size: 25%;
+  background-position: 50% 50%;
+  
+  width: calc(95vw - 300px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  animation-name: bouncy-arrow;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-direction: forward;
+  animation-duration: 3s;
+}
+
+@keyframes bouncy-arrow {
+  0% {background-position: 50% 50%;}
+  20% {background-position: 50% 50%;}
+  25% {background-position: 60% 50%;}
+  30% {background-position: 40% 50%;}
+  35% {background-position: 60% 50%;}
+  40% {background-position: 50% 50%;}
+  100% {background-position: 50% 50%;}
+}
+
+.scroll-instructions {
+  padding-top: 30px;
 }
