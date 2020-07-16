@@ -342,20 +342,7 @@ button:active {
   color: white;
   display: flex;
   flex-direction: column;
-  font-size: 1em;
-}
-
-.blockHeader > div:first-child {
-  text-decoration: underline;
-  margin-bottom: 10px;
-}
-
-.selfDiv {
-  background: #03A9F4;
-}
-
-.compareDiv {
-  background: #FC7233;
+  font-size: 1.33em;
 }
 
 .lineChart {
@@ -417,6 +404,8 @@ button:active {
 
 .wealth-row {
   height: 100%;
+  color: #fff;
+
 }
 
 .scroll-this-way {
@@ -448,7 +437,49 @@ button:active {
   40% {background-position: 50% 50%;}
   100% {background-position: 50% 50%;}
 }
+.scroll-this-way > span {
+  font-size: 1.5em;
+}
 
 .scroll-instructions {
   padding-top: 30px;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.wealth-wrapper {
+  margin: 1em 3em;
+}
+
+.wealth-title {
+  font-size: 1em;
+  width: 300px;
+}
+
+.one-thousand, .ten-million {
+  margin: 5px 0px;
+}
+
+.thousand-arrow {
+  margin-left: -11px;
+  width: 24px;
+  height: 40px;
+}
+
+.bench-header {
+  width: 400px;
+}
+
+.own-savings, .bench-savings {
+  display: flex;
+  margin: 5px 0px;
+}
+
+
+.own-div {
+  background: #00CECB;
+}
+
+.bench-div {
+  background: #0C6291;
 }

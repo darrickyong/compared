@@ -23,7 +23,8 @@ const netWorth = [
   { "name": "Median Beverly Hills Mansion", "val": 3540000, "img":"./assets/images/mansion.jpg" },
   { "name": "Boeing 777-300ER", "val": 375500000, "img": "./assets/images/boeing.jpg"},
   { "name": "Mark Cuban", "val": 4300000000, "img": "./assets/images/cuban.jpeg"},
-  // { "name": "Jeff Bezos", "val": 145000000000, "img": "./assets/images/jeff.jpg" },
+  { "name": "Elon Musk", "val": 69000000000, "img": "./assets/images/musk.jpg"},
+  { "name": "Jeff Bezos", "val": 178000000000, "img": "./assets/images/jeff.jpg" },
 ]
 // Select drop-down
 const d3Selection = d3
@@ -172,7 +173,7 @@ const setYears = (e) => {
   let baseContributions = document.getElementsByClassName("user-contributions")[0].value.replace(/[,.]/g, "") / 100;
   let growth = document.getElementsByClassName("user-growth")[0].value.replace(/[,.]/g, "") / 100;
   let comparison = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-  let years = (nper(growth, 1, baseContributions, baseSavings, -comparison)).replace(/[,.]/g, "")/100;
+  let years = nper(growth, 1, baseContributions, baseSavings, -comparison) === "FOREVER" ? "FOREVER" : (nper(growth, 1, baseContributions, baseSavings, -comparison)).replace(/[,.]/g, "")/100;
   const forever = "It seems like it will take a long time to reach your goal. Double check that you are either saving something every year or that your money is growing."
   const already = "Congratuations are in order! It seems like you've reached your goal. ";
   const normal = years > 0 ? `You will reach your goal in ${years} year(s), in Year ${new Date().getFullYear() + Math.ceil(years)}.`: null;
@@ -198,37 +199,38 @@ const generateDiv = (size, str) => {
   size = Math.max(1, Math.ceil(size / 1000));
   // size = Math.max(1, Math.ceil(size));
 
-  if (Math.sqrt(size) < 250) {
+  if (Math.sqrt(size) < 500) {
     let div = document.createElement("div");
-    let square = Math.floor(Math.sqrt(size));
+    // let square = Math.floor(Math.sqrt(size));
+    let square = (Math.sqrt(size));
     div.style.height = `${square}px`;
     div.style.width = `${square}px`;
-    div.className = str === "self" ? "selfDiv" : "compareDiv";
+    div.className = str === "own" ? "own-div" : "bench-div";
     resultDiv.appendChild(div);
 
-    size = size - square ** 2;
-    while (size > 0) {
-      let newDiv = document.createElement("div");
-      newDiv.style.height = `${Math.min(square, size)}px`;
-      newDiv.style.width = "1px";
-      newDiv.className = str === "self" ? "selfDiv" : "compareDiv";
-      resultDiv.appendChild(newDiv);
-      size = size - square;
-    }
+    // size = size - square ** 2;
+    // while (size > 0) {
+    //   let newDiv = document.createElement("div");
+    //   newDiv.style.height = `${Math.min(square, size)}px`;
+    //   newDiv.style.width = "1px";
+    //   newDiv.className = str === "own" ? "ownDiv" : "benchDiv";
+    //   resultDiv.appendChild(newDiv);
+    //   size = size - square;
+    // }
 
   } else {
     while ( size >= 1 ) {
       let div = document.createElement("div");
-      if ( size >= 250 ) {
-        div.style.height = "250px";
-        div.style.width = `${Math.floor(size / 250)}px`;
-        size = size % 250;
+      if ( size >= 500 ) {
+        div.style.height = "500px";
+        div.style.width = `${Math.floor(size / 500)}px`;
+        size = size % 500;
       } else {
         div.style.height = `${size}px`;
         div.style.width = "1px";
-        size = size / 250;
+        size = size / 500;
       }
-      div.className = str === "self" ? "selfDiv" : "compareDiv";
+      div.className = str === "own" ? "own-div" : "bench-div";
       resultDiv.appendChild(div);
     }
   }
@@ -237,6 +239,8 @@ const generateDiv = (size, str) => {
 
 const update = () => {
   removeCharts();
+  const baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
+  const compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
   // Div Element
   const blockChart = document.createElement("div");
   blockChart.className = "blockChart";
@@ -258,21 +262,89 @@ const update = () => {
   scrollInstructions.innerText = "To scroll, use shift + mousewheel or swipe on your touchpad."; 
   scroll.appendChild(scrollInstructions);
   
-  
-
   const thousand = document.createElement("div");
-  thousand.className = "one-thousand";
+  thousand.className = "wealth-wrapper";
+    const thousandHeader = document.createElement("div");
+    thousandHeader.className = "wealth-title";
+    thousandHeader.innerText = `This is $1,000...`;
+    
+    const thousandDiv = document.createElement("div");
+    thousandDiv.className = "one-thousand";
+    thousandDiv.style.height = "1px";
+    thousandDiv.style.width = "1px";
+    thousandDiv.style.background = "#fff";
 
+    const thousandArrow = document.createElement("img");
+    thousandArrow.className = "thousand-arrow";
+    thousandArrow.src = "./assets/images/arrow.svg";
+
+    thousand.appendChild(thousandHeader);
+    thousand.appendChild(thousandDiv);
+    thousand.appendChild(thousandArrow);
+
+  const million = document.createElement("div");
+  million.className = "wealth-wrapper";
+    const millionHeader = document.createElement("div");
+    millionHeader.className = "wealth-title";
+    millionHeader.innerText = `This is $10,000,000...`;
+    
+    const millionDiv = document.createElement("div");
+    millionDiv.className = "ten-million";
+    millionDiv.style.height = "100px";
+    millionDiv.style.width = "100px";
+    millionDiv.style.background = "#fff";
+
+    million.appendChild(millionHeader);
+    million.appendChild(millionDiv);
+      
   const ownSavings = document.createElement("div");
-  ownSavings.className = "own-savings";
+  ownSavings.className = "wealth-wrapper";
+
+    const ownHeader = document.createElement("div");
+    ownHeader.className = "wealth-title own-header";
+    ownHeader.innerText = `This represents your savings...`;
+    
+    const ownDivs = generateDiv(baseSavings, "own");
+    ownDivs.className = "own-savings";
+
+    ownSavings.appendChild(ownHeader);
+    ownSavings.appendChild(ownDivs);
+    if(baseSavings < 10000) {
+      const ownArrow = document.createElement("img");
+      ownArrow.className = "thousand-arrow";
+      ownArrow.src = "./assets/images/arrow.svg";
+      ownSavings.appendChild(ownArrow);
+    }
 
   const benchmark = document.createElement("div");
-  benchmark.className = "benchmark";
+  benchmark.className = "wealth-wrapper";
+    const benchHeader = document.createElement("div");
+    benchHeader.className = "wealth-title bench-header";
+    benchHeader.innerText = `This represents your selected benchmark...WOW!`;
 
+    
+    const benchDivs = generateDiv(compare, "bench");
+    benchDivs.className = "bench-savings";
+
+    benchmark.appendChild(benchHeader);
+    benchmark.appendChild(benchDivs);
+    if(compare < 10000) {
+      const benchArrow = document.createElement("img");
+      benchArrow.className = "thousand-arrow";
+      benchArrow.src = "./assets/images/arrow.svg";
+      benchmark.appendChild(benchArrow);
+    }
+    
+  const hash = {
+    10000000: million,
+    [baseSavings]: ownSavings,
+    [compare]: benchmark,
+  }
   wealthRow.appendChild(scroll);
   wealthRow.appendChild(thousand);
-  wealthRow.appendChild(ownSavings);
-  wealthRow.appendChild(benchmark);
+  [10000000, baseSavings, compare].sort((a, b) => { return a - b}).forEach( num => {
+    wealthRow.appendChild(hash[num]);
+  })
 
   document.getElementsByClassName("blocks")[0].appendChild(blockChart);
   blockChart.appendChild(header);
