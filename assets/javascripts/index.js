@@ -309,7 +309,7 @@ const update = () => {
 
     ownSavings.appendChild(ownHeader);
     ownSavings.appendChild(ownDivs);
-    if(baseSavings < 10000) {
+    if (baseSavings < 10000) {
       const ownArrow = document.createElement("img");
       ownArrow.className = "thousand-arrow";
       ownArrow.src = "./assets/images/arrow.svg";
@@ -328,7 +328,7 @@ const update = () => {
 
     benchmark.appendChild(benchHeader);
     benchmark.appendChild(benchDivs);
-    if(compare < 10000) {
+    if (compare < 10000) {
       const benchArrow = document.createElement("img");
       benchArrow.className = "thousand-arrow";
       benchArrow.src = "./assets/images/arrow.svg";
@@ -349,20 +349,6 @@ const update = () => {
   document.getElementsByClassName("blocks")[0].appendChild(blockChart);
   blockChart.appendChild(header);
   blockChart.appendChild(wealthRow);
-
-  // let baseSavings = document.getElementsByClassName("user-savings")[0].value.replace(/[,.]/g, "") / 100;
-  // const selfDiv = generateDiv(baseSavings, "self");
-  // selfDiv.className = "selfDivs";
-
-  // let compare = netWorth[document.getElementsByClassName("user-selection")[0].selectedIndex].val;
-  // const compareDiv = generateDiv(compare, "compare");
-  // compareDiv.className = "compareDivs";
-
-  // document.getElementsByClassName("blocks")[0].appendChild(blockChart);
-
-  // blockChart.appendChild(selfDiv);
-  // blockChart.appendChild(compareDiv);
-  // ---------------
 
   // Block Chart
   // const svg = d3.select(".blocks").append("svg").attr("class", "blockChart");
@@ -600,36 +586,6 @@ const drawChart = (e) => {
     .style("opacity", 0.5)
     .attr("x1", lineWidth)
     .attr("x2", lineWidth);
-
-  // focus
-  //   .append("line")
-  //   .attr("class", "benchXLine")
-  //   .style("stroke", "#92DCE5")
-  //   .style("stroke-width", "1.5")
-  //   .style("stroke-dasharray", "5")
-  //   .style("opacity", 0.5)
-  //   .attr("y1", 0)
-  //   .attr("y2", lineHeight);
-
-  // focus
-  //   .append("line")
-  //   .attr("class", "benchYLine")
-  //   .style("stroke", "#92DCE5")
-  //   .style("stroke-width", "1.5")
-  //   .style("stroke-dasharray", "5")
-  //   .style("opacity", 0.5)
-  //   .attr("x1", lineWidth)
-  //   .attr("x2", lineWidth);
-
-  // focus
-  //   .select(".benchXLine")
-  //   .attr("transform", "translate(100,200)")
-  //   .attr("y2", lineHeight + margin.top - 200)
-
-  // focus
-  //   .select(".benchYLine")
-  //   .attr("transform", "translate(" + widthAdjust + ", " + yAdjust + ")")
-  //   .attr("x2", lineWidth + x(d.year));
 
   focus
     .append("text")
